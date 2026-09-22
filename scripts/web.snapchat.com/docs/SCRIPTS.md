@@ -70,5 +70,5 @@ Optionally open by name, then scrape **visible text** bubbles. Empty pane → `c
 
 ## Docs
 
-[SCOPE](SCOPE.md) · [QA](QA.md) · [LIMITATIONS](LIMITATIONS.md) · [BAN_RISKS](BAN_RISKS.md) · [TOKEN_AND_QUOTA](TOKEN_AND_QUOTA.md)  
+[SCOPE](SCOPE.md) · [QA](QA.md) · [LIMITATIONS](LIMITATIONS.md) · [BAN_RISKS](BAN_RISKS.md)  
 Benchmarks: [`../benchmarks/latest.md`](../benchmarks/latest.md) · [`../benchmarks/critical.md`](../benchmarks/critical.md)

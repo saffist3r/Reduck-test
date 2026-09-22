@@ -37,7 +37,7 @@ Normal paced list/open/read of a few chats.
 
 1. Single-tab lock — QA-001  
 2. Session/modal fights between Web tabs  
-3. Reduck run budget — [TOKEN_AND_QUOTA.md](TOKEN_AND_QUOTA.md)
+3. Reduck monthly `run_script` quota (`whoami`) — plan limit, not a Snapchat ban
 
 ## Script map
 

@@ -33,7 +33,7 @@ Works when probed (not in catalog): chat image upload via `setInputFiles` (Buffe
 | Private scripts cap = 3 | Snapchat scripts are public | QA-007 |
 | `start_session` is clean | Use `run_script` + `loggedIn: true` | QA-003 |
 | Desktop path uploads flaky | Prefer in-memory bytes | — |
-| Run quota | [TOKEN_AND_QUOTA.md](TOKEN_AND_QUOTA.md) | — |
+| Run quota | Each `run_script` counts against Reduck plan (`whoami`) — not a Snapchat ban signal | — |
 | Empty `open_chat.name` | MCP schema rejects before script | QA-010 |
 
 ## Caveats

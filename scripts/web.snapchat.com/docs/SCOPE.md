@@ -31,4 +31,4 @@ Full contracts: [SCRIPTS.md](SCRIPTS.md)
 - Scripts are **public** (private quota used by other hosts)
 - Local tree: `scripts/web.snapchat.com/`
 
-[LIMITATIONS.md](LIMITATIONS.md) · [BAN_RISKS.md](BAN_RISKS.md) · [TOKEN_AND_QUOTA.md](TOKEN_AND_QUOTA.md) · [QA.md](QA.md)
+[LIMITATIONS.md](LIMITATIONS.md) · [BAN_RISKS.md](BAN_RISKS.md) · [QA.md](QA.md)
