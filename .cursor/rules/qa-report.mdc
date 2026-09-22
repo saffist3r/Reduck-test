@@ -6,7 +6,7 @@ alwaysApply: false
 
 # QA findings
 
-Append to `scripts/web.snapchat.com/docs/QA.md`:
+Append to `scripts/web.snapchat.com/docs/QA.md`. No GO/NO-GO sections — facts and fixes only.
 
 ```md
 ### QA-NNN — short title
