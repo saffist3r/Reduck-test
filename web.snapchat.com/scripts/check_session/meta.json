@@ -1,0 +1,26 @@
+{
+  "host": "web.snapchat.com",
+  "slug": "check_session",
+  "name": "Check session",
+  "description": "Open Snapchat for Web and report whether the injected session is logged in (chat list visible), plus page url/title. Handles the single-tab lock modal.",
+  "visibility": "public",
+  "loggedIn": true,
+  "sideEffects": "none",
+  "humanRequired": false,
+  "input": {
+    "type": "object",
+    "properties": {}
+  },
+  "output": {
+    "type": "object",
+    "required": ["loggedIn", "url"],
+    "properties": {
+      "loggedIn": { "type": "boolean" },
+      "username": { "type": ["string", "null"] },
+      "displayName": { "type": ["string", "null"] },
+      "tooManyTabs": { "type": "boolean" },
+      "url": { "type": "string" },
+      "title": { "type": "string" }
+    }
+  }
+}

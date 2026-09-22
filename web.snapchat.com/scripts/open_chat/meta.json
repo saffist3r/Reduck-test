@@ -1,0 +1,36 @@
+{
+  "host": "web.snapchat.com",
+  "slug": "open_chat",
+  "name": "Open chat",
+  "description": "Open a Snapchat for Web chat by display name (from list_chats). Returns opened/notFound. Read-only navigation; never sends.",
+  "visibility": "public",
+  "loggedIn": true,
+  "sideEffects": "none",
+  "humanRequired": false,
+  "input": {
+    "type": "object",
+    "required": ["name"],
+    "properties": {
+      "name": {
+        "type": "string",
+        "minLength": 1,
+        "description": "Chat display name, e.g. My AI or a friend name from list_chats."
+      }
+    }
+  },
+  "output": {
+    "type": "object",
+    "required": ["opened", "name", "url"],
+    "properties": {
+      "opened": { "type": "boolean" },
+      "notFound": { "type": "boolean" },
+      "name": { "type": "string" },
+      "matchedName": { "type": ["string", "null"] },
+      "available": { "type": "array", "items": { "type": "string" } },
+      "composerHint": { "type": "boolean" },
+      "tooManyTabs": { "type": "boolean" },
+      "url": { "type": "string" },
+      "title": { "type": "string" }
+    }
+  }
+}

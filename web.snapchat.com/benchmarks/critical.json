@@ -1,0 +1,191 @@
+{
+  "ranAt": "2026-09-21T20:54:08.459Z",
+  "suite": "/Users/saffist3r/Projects/Reduck-Test/web.snapchat.com/tests/critical-cases.json",
+  "suiteName": "critical",
+  "host": "web.snapchat.com",
+  "summary": {
+    "total": 14,
+    "passed": 14,
+    "failed": 0,
+    "passRate": 1,
+    "totalDurationMs": 0
+  },
+  "byScript": {
+    "check_session": {
+      "passed": 2,
+      "failed": 0,
+      "durationMs": 0
+    },
+    "list_chats": {
+      "passed": 4,
+      "failed": 0,
+      "durationMs": 0
+    },
+    "open_chat": {
+      "passed": 5,
+      "failed": 0,
+      "durationMs": 0
+    },
+    "list_chat_messages": {
+      "passed": 3,
+      "failed": 0,
+      "durationMs": 0
+    }
+  },
+  "results": [
+    {
+      "id": "crit-session-logged-in",
+      "script": "check_session",
+      "tag": "session",
+      "status": "pass",
+      "notes": "loggedIn ((1) Snapchat)",
+      "reason": "ok",
+      "durationMs": 0,
+      "runId": "0ebfc516-31d2-4811-92f7-7d479a7a1f01",
+      "expectFailures": []
+    },
+    {
+      "id": "crit-session-shape",
+      "script": "check_session",
+      "tag": "session",
+      "status": "pass",
+      "notes": "loggedIn ((1) Snapchat)",
+      "reason": "ok",
+      "durationMs": 0,
+      "runId": "0ebfc516-31d2-4811-92f7-7d479a7a1f01",
+      "expectFailures": []
+    },
+    {
+      "id": "crit-chats-min",
+      "script": "list_chats",
+      "tag": "list",
+      "status": "pass",
+      "notes": "2 chats; first=My AI",
+      "reason": "ok",
+      "durationMs": 0,
+      "runId": "3b7c02af-2f56-4b0e-8fb1-60dcdc1d9514",
+      "expectFailures": []
+    },
+    {
+      "id": "crit-chats-limit-1",
+      "script": "list_chats",
+      "tag": "list",
+      "status": "pass",
+      "notes": "1 chats; first=My AI",
+      "reason": "ok",
+      "durationMs": 0,
+      "runId": "c35be95f-8db5-46d4-8e73-fa14f328a303",
+      "expectFailures": []
+    },
+    {
+      "id": "crit-chats-has-my-ai",
+      "script": "list_chats",
+      "tag": "list",
+      "status": "pass",
+      "notes": "2 chats; first=My AI",
+      "reason": "ok",
+      "durationMs": 0,
+      "runId": "786cd5f5-b1a7-4019-8c93-023d18a894bf",
+      "expectFailures": []
+    },
+    {
+      "id": "crit-chats-row-shape",
+      "script": "list_chats",
+      "tag": "list",
+      "status": "pass",
+      "notes": "2 chats; first=My AI",
+      "reason": "ok",
+      "durationMs": 0,
+      "runId": "786cd5f5-b1a7-4019-8c93-023d18a894bf",
+      "expectFailures": []
+    },
+    {
+      "id": "crit-open-my-ai",
+      "script": "open_chat",
+      "tag": "open",
+      "status": "pass",
+      "notes": "opened My AI",
+      "reason": "ok",
+      "durationMs": 0,
+      "runId": "55d6be51-a81e-4d5d-b89a-65d78f508b4b",
+      "expectFailures": []
+    },
+    {
+      "id": "crit-open-case-insensitive",
+      "script": "open_chat",
+      "tag": "open",
+      "status": "pass",
+      "notes": "opened My AI",
+      "reason": "ok",
+      "durationMs": 0,
+      "runId": "02edbbfe-e541-45b1-b302-1829e7214ffd",
+      "expectFailures": []
+    },
+    {
+      "id": "crit-open-partial-name",
+      "script": "open_chat",
+      "tag": "open",
+      "status": "pass",
+      "notes": "opened Team Snapchat",
+      "reason": "ok",
+      "durationMs": 0,
+      "runId": "ed932abf-a1f3-4e97-a2e5-d436c53087f2",
+      "expectFailures": []
+    },
+    {
+      "id": "crit-open-not-found",
+      "script": "open_chat",
+      "tag": "open",
+      "status": "pass",
+      "notes": "notFound; available=My AI|Team Snapchat",
+      "reason": "ok",
+      "durationMs": 0,
+      "runId": "4c0ed429-222c-435b-bf70-ef931479f982",
+      "expectFailures": []
+    },
+    {
+      "id": "crit-open-empty-name-throws",
+      "script": "open_chat",
+      "tag": "open",
+      "status": "pass",
+      "notes": "error: web.snapchat.com/open_chat args validation failed: data/name must NOT have fewer than 1 characters",
+      "reason": "ok (expected error)",
+      "durationMs": 0,
+      "runId": "4666762e-ee1f-4586-8894-2c757e9ca855",
+      "expectFailures": []
+    },
+    {
+      "id": "crit-messages-my-ai",
+      "script": "list_chat_messages",
+      "tag": "messages",
+      "status": "pass",
+      "notes": "count 10",
+      "reason": "ok",
+      "durationMs": 0,
+      "runId": "8e01bef5-fba2-4fe6-91a1-18b5988cc973",
+      "expectFailures": []
+    },
+    {
+      "id": "crit-messages-limit-3",
+      "script": "list_chat_messages",
+      "tag": "messages",
+      "status": "pass",
+      "notes": "count 3",
+      "reason": "ok",
+      "durationMs": 0,
+      "runId": "72043386-95f2-4e4b-9f7c-354f3318efe2",
+      "expectFailures": []
+    },
+    {
+      "id": "crit-messages-not-found",
+      "script": "list_chat_messages",
+      "tag": "messages",
+      "status": "pass",
+      "notes": "chat notFound",
+      "reason": "ok",
+      "durationMs": 0,
+      "runId": null,
+      "expectFailures": []
+    }
+  ]
+}

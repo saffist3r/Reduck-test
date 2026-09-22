@@ -1,0 +1,170 @@
+{
+  "host": "web.snapchat.com",
+  "suite": "critical",
+  "description": "Capability + edge-case suite. Run SEQUENTIALLY with delays (see tests/README). Do not parallel-blast — see docs/BAN_RISKS.md.",
+  "cases": [
+    {
+      "id": "crit-session-logged-in",
+      "script": "check_session",
+      "args": {},
+      "tag": "session",
+      "expect": {
+        "ok": true,
+        "loggedIn": true,
+        "tooManyTabs": false,
+        "urlIncludes": "snapchat.com/web"
+      }
+    },
+    {
+      "id": "crit-session-shape",
+      "script": "check_session",
+      "args": {},
+      "tag": "session",
+      "expect": {
+        "ok": true,
+        "hasKeys": ["loggedIn", "url", "title", "tooManyTabs"]
+      }
+    },
+    {
+      "id": "crit-chats-min",
+      "script": "list_chats",
+      "args": { "limit": 5 },
+      "tag": "list",
+      "expect": {
+        "ok": true,
+        "loggedIn": true,
+        "tooManyTabs": false,
+        "minCount": 1,
+        "maxCount": 5
+      }
+    },
+    {
+      "id": "crit-chats-limit-1",
+      "script": "list_chats",
+      "args": { "limit": 1 },
+      "tag": "list",
+      "expect": {
+        "ok": true,
+        "minCount": 1,
+        "maxCount": 1
+      }
+    },
+    {
+      "id": "crit-chats-has-my-ai",
+      "script": "list_chats",
+      "args": { "limit": 10 },
+      "tag": "list",
+      "expect": {
+        "ok": true,
+        "minCount": 1,
+        "chatNameIncludes": "My AI"
+      }
+    },
+    {
+      "id": "crit-chats-row-shape",
+      "script": "list_chats",
+      "args": { "limit": 3 },
+      "tag": "list",
+      "expect": {
+        "ok": true,
+        "minCount": 1,
+        "chatRowHasKeys": ["name", "preview", "when", "unread"]
+      }
+    },
+    {
+      "id": "crit-open-my-ai",
+      "script": "open_chat",
+      "args": { "name": "My AI" },
+      "tag": "open",
+      "expect": {
+        "ok": true,
+        "opened": true,
+        "notFound": false,
+        "tooManyTabs": false,
+        "urlIncludes": "snapchat.com/web"
+      }
+    },
+    {
+      "id": "crit-open-case-insensitive",
+      "script": "open_chat",
+      "args": { "name": "my ai" },
+      "tag": "open",
+      "expect": {
+        "ok": true,
+        "opened": true,
+        "notFound": false
+      }
+    },
+    {
+      "id": "crit-open-partial-name",
+      "script": "open_chat",
+      "args": { "name": "Team Snap" },
+      "tag": "open",
+      "expect": {
+        "ok": true,
+        "opened": true,
+        "notFound": false
+      }
+    },
+    {
+      "id": "crit-open-not-found",
+      "script": "open_chat",
+      "args": { "name": "zzz-nonexistent-chat-xyz" },
+      "tag": "open",
+      "expect": {
+        "ok": true,
+        "opened": false,
+        "notFound": true,
+        "hasAvailable": true
+      }
+    },
+    {
+      "id": "crit-open-empty-name-throws",
+      "script": "open_chat",
+      "args": { "name": "" },
+      "tag": "open",
+      "expect": {
+        "ok": false,
+        "errorIncludes": "name"
+      }
+    },
+    {
+      "id": "crit-messages-my-ai",
+      "script": "list_chat_messages",
+      "args": { "name": "My AI", "limit": 10 },
+      "tag": "messages",
+      "expect": {
+        "ok": true,
+        "opened": true,
+        "notFound": false,
+        "minCount": 1,
+        "maxCount": 10,
+        "messageTextIncludes": "AI"
+      }
+    },
+    {
+      "id": "crit-messages-limit-3",
+      "script": "list_chat_messages",
+      "args": { "name": "My AI", "limit": 3 },
+      "tag": "messages",
+      "expect": {
+        "ok": true,
+        "opened": true,
+        "minCount": 1,
+        "maxCount": 3
+      }
+    },
+    {
+      "id": "crit-messages-not-found",
+      "script": "list_chat_messages",
+      "args": { "name": "zzz-nonexistent-chat-xyz", "limit": 5 },
+      "tag": "messages",
+      "expect": {
+        "ok": true,
+        "opened": false,
+        "notFound": true,
+        "count": 0
+      }
+    }
+  ]
+}

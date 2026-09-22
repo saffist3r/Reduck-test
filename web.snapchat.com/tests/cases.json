@@ -1,0 +1,55 @@
+{
+  "host": "web.snapchat.com",
+  "cases": [
+    {
+      "id": "session-logged-in",
+      "script": "check_session",
+      "args": {},
+      "expect": {
+        "ok": true,
+        "loggedIn": true
+      }
+    },
+    {
+      "id": "chats-limit-5",
+      "script": "list_chats",
+      "args": { "limit": 5 },
+      "expect": {
+        "ok": true,
+        "loggedIn": true,
+        "minCount": 1
+      }
+    },
+    {
+      "id": "open-my-ai",
+      "script": "open_chat",
+      "args": { "name": "My AI" },
+      "expect": {
+        "ok": true,
+        "opened": true,
+        "notFound": false
+      }
+    },
+    {
+      "id": "open-not-found",
+      "script": "open_chat",
+      "args": { "name": "zzz-nonexistent-chat-xyz" },
+      "expect": {
+        "ok": true,
+        "opened": false,
+        "notFound": true
+      }
+    },
+    {
+      "id": "messages-my-ai",
+      "script": "list_chat_messages",
+      "args": { "name": "My AI", "limit": 10 },
+      "expect": {
+        "ok": true,
+        "opened": true,
+        "notFound": false,
+        "minCount": 1
+      }
+    }
+  ]
+}

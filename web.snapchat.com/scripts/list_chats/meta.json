@@ -1,0 +1,44 @@
+{
+  "host": "web.snapchat.com",
+  "slug": "list_chats",
+  "name": "List chats",
+  "description": "List top N Snapchat for Web conversations (name, preview, relative time, unread hint). Read-only. Handles empty list and single-tab modal.",
+  "visibility": "public",
+  "loggedIn": true,
+  "sideEffects": "none",
+  "humanRequired": false,
+  "input": {
+    "type": "object",
+    "properties": {
+      "limit": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 50,
+        "default": 10,
+        "description": "Max chats to return (default 10)."
+      }
+    }
+  },
+  "output": {
+    "type": "object",
+    "required": ["count", "chats", "url"],
+    "properties": {
+      "loggedIn": { "type": "boolean" },
+      "tooManyTabs": { "type": "boolean" },
+      "count": { "type": "integer" },
+      "chats": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": { "type": ["string", "null"] },
+            "preview": { "type": ["string", "null"] },
+            "when": { "type": ["string", "null"] },
+            "unread": { "type": "boolean" }
+          }
+        }
+      },
+      "url": { "type": "string" }
+    }
+  }
+}
