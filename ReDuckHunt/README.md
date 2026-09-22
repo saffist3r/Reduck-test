@@ -27,13 +27,16 @@ From repo root:
 npm test
 ```
 
-Watch / HTML+JUnit report:
+Watch / HTML+JUnit+Markdown report:
 
 ```bash
 npm run test:watch --prefix ReDuckHunt
-npm run test:report --prefix ReDuckHunt
+npm test --prefix ReDuckHunt
 # open ReDuckHunt/test-results/index.html
+# cat ReDuckHunt/test-results/report.md
 ```
+
+On GitHub Actions, `report.md` is appended to the **job summary** (visible on the workflow run page).
 
 ## Layout
 

@@ -20,6 +20,6 @@ cd ReDuckHunt && npm install && npm test
 npm test
 ```
 
-Reports: `ReDuckHunt/test-results/` (JUnit + HTML). GitHub Actions: [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
+Reports: `ReDuckHunt/test-results/` (JUnit + HTML + **`report.md`**). On GitHub Actions the same Markdown is posted as the **job summary**. Workflow: [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
 
 Live host suites remain agent-driven (`run-benchmark.mjs` + Reduck MCP).

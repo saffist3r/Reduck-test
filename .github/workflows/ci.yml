@@ -21,7 +21,18 @@ jobs:
           cache: npm
           cache-dependency-path: ReDuckHunt/package-lock.json
       - run: npm ci
-      - run: npm test
+      - name: Run tests
+        id: test
+        run: npm test
+      - name: Markdown summary
+        if: always()
+        run: |
+          if [ -f test-results/report.md ]; then
+            cat test-results/report.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "## ReDuckHunt report" >> "$GITHUB_STEP_SUMMARY"
+            echo "No \`test-results/report.md\` produced." >> "$GITHUB_STEP_SUMMARY"
+          fi
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4

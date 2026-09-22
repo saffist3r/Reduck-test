@@ -6,12 +6,11 @@ mkdirSync("test-results", { recursive: true });
 export default defineConfig({
   test: {
     include: ["tests/**/*.test.js"],
-    reporters: ["default", "junit", "html"],
+    reporters: ["default", "junit", "html", "./lib/markdownReporter.js"],
     outputFile: {
       junit: "test-results/junit.xml",
       html: "test-results/index.html",
     },
-    // Repo root is parent of ReDuckHunt/
     testTimeout: 15_000,
   },
 });
