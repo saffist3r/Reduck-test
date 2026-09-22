@@ -1,84 +1,90 @@
 {
-  "ranAt": "2026-09-21T20:40:13.918Z",
-  "suite": "anybuddyapp.com/tests/cases.json",
+  "ranAt": "2026-09-22T17:28:31.006Z",
+  "suite": "/Users/saffist3r/Projects/Reduck-Test/scripts/web.snapchat.com/tests/cases.json",
+  "suiteName": "default",
   "host": "web.snapchat.com",
   "summary": {
     "total": 5,
     "passed": 5,
     "failed": 0,
     "passRate": 1,
-    "totalDurationMs": 0
+    "totalDurationMs": 33629
   },
   "byScript": {
     "check_session": {
       "passed": 1,
       "failed": 0,
-      "durationMs": 0
+      "durationMs": 2794
     },
     "list_chats": {
       "passed": 1,
       "failed": 0,
-      "durationMs": 0
+      "durationMs": 5770
     },
     "open_chat": {
       "passed": 2,
       "failed": 0,
-      "durationMs": 0
+      "durationMs": 14547
     },
     "list_chat_messages": {
       "passed": 1,
       "failed": 0,
-      "durationMs": 0
+      "durationMs": 10518
     }
   },
   "results": [
     {
       "id": "session-logged-in",
       "script": "check_session",
+      "tag": null,
       "status": "pass",
       "notes": "loggedIn ((1) Snapchat)",
       "reason": "ok",
-      "durationMs": 0,
+      "durationMs": 2794,
       "runId": "369e9826-3ab8-494a-bf4a-4758eebac6e3",
       "expectFailures": []
     },
     {
       "id": "chats-limit-5",
       "script": "list_chats",
+      "tag": null,
       "status": "pass",
       "notes": "2 chats; first=My AI",
       "reason": "ok",
-      "durationMs": 0,
+      "durationMs": 5770,
       "runId": "831f2b51-506e-494e-80fb-f210e14a81ec",
       "expectFailures": []
     },
     {
       "id": "open-my-ai",
       "script": "open_chat",
+      "tag": null,
       "status": "pass",
       "notes": "opened My AI",
       "reason": "ok",
-      "durationMs": 0,
+      "durationMs": 9774,
       "runId": "6c838e11-cf5c-4308-9a6e-012c2679d433",
       "expectFailures": []
     },
     {
       "id": "open-not-found",
       "script": "open_chat",
+      "tag": null,
       "status": "pass",
       "notes": "notFound; available=My AI|Team Snapchat",
       "reason": "ok",
-      "durationMs": 0,
+      "durationMs": 4773,
       "runId": "e492157d-a3fc-479c-99fd-1f53d5dcc43e",
       "expectFailures": []
     },
     {
       "id": "messages-my-ai",
       "script": "list_chat_messages",
+      "tag": null,
       "status": "pass",
       "notes": "count 10",
       "reason": "ok",
-      "durationMs": 0,
+      "durationMs": 10518,
       "runId": "8f28728d-28c4-4e77-90b4-df3941684f6b",
       "expectFailures": []
     }

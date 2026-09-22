@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-09-21T14:33:45.261Z",
+  "ranAt": "2026-09-22T17:28:30.957Z",
   "suite": "anybuddyapp.com/tests/cases.json",
   "host": "anybuddyapp.com",
   "summary": {
@@ -7,28 +7,28 @@
     "passed": 9,
     "failed": 0,
     "passRate": 1,
-    "totalDurationMs": 0
+    "totalDurationMs": 5678
   },
   "byScript": {
     "search_locations": {
       "passed": 2,
       "failed": 0,
-      "durationMs": 0
+      "durationMs": 1022
     },
     "search_clubs": {
       "passed": 2,
       "failed": 0,
-      "durationMs": 0
+      "durationMs": 2477
     },
     "get_club": {
       "passed": 1,
       "failed": 0,
-      "durationMs": 0
+      "durationMs": 1199
     },
     "list_public_matches": {
       "passed": 4,
       "failed": 0,
-      "durationMs": 0
+      "durationMs": 980
     }
   },
   "results": [
@@ -36,9 +36,9 @@
       "id": "locations-lyon",
       "script": "search_locations",
       "status": "pass",
-      "notes": "1 candidates",
+      "notes": "21 candidates",
       "reason": "ok",
-      "durationMs": 0,
+      "durationMs": 607,
       "runId": "7054ea19-6f5d-4757-9e40-a808d452479e",
       "expectFailures": []
     },
@@ -46,9 +46,9 @@
       "id": "locations-paris",
       "script": "search_locations",
       "status": "pass",
-      "notes": "1 candidates",
+      "notes": "16 candidates",
       "reason": "ok",
-      "durationMs": 0,
+      "durationMs": 415,
       "runId": "1c2a6463-d3b5-4368-a47d-90dedfb27117",
       "expectFailures": []
     },
@@ -58,7 +58,7 @@
       "status": "pass",
       "notes": "13 clubs / 49 total",
       "reason": "ok",
-      "durationMs": 0,
+      "durationMs": 1056,
       "runId": "31a0b970-c2b8-4e23-bd55-08c8f9f10c03",
       "expectFailures": []
     },
@@ -68,7 +68,7 @@
       "status": "pass",
       "notes": "12 clubs / 60 total",
       "reason": "ok",
-      "durationMs": 0,
+      "durationMs": 1421,
       "runId": "0dcaa7ea-a59e-4a90-ac39-fade4d7d661b",
       "expectFailures": []
     },
@@ -78,7 +78,7 @@
       "status": "pass",
       "notes": "Racing Club De France, rating 4.7",
       "reason": "ok",
-      "durationMs": 0,
+      "durationMs": 1199,
       "runId": "6d0b059c-6205-44db-9550-d97296470017",
       "expectFailures": []
     },
@@ -88,7 +88,7 @@
       "status": "pass",
       "notes": "count 13, open 13",
       "reason": "ok",
-      "durationMs": 0,
+      "durationMs": 477,
       "runId": "de48796b-650e-48b9-ac87-01991e350346",
       "expectFailures": []
     },
@@ -98,7 +98,7 @@
       "status": "pass",
       "notes": "count 0, open 0",
       "reason": "ok",
-      "durationMs": 0,
+      "durationMs": 198,
       "runId": "94ae7699-1715-4f7d-a628-d808ae9dc309",
       "expectFailures": []
     },
@@ -108,7 +108,7 @@
       "status": "pass",
       "notes": "count 5, open 5",
       "reason": "ok",
-      "durationMs": 0,
+      "durationMs": 257,
       "runId": "99ea28e6-4824-4d1b-a0d6-d4e6f6b5e4c1",
       "expectFailures": []
     },
@@ -118,7 +118,7 @@
       "status": "pass",
       "notes": "notFound",
       "reason": "ok",
-      "durationMs": 0,
+      "durationMs": 48,
       "runId": "cda90a90-3541-4e60-beca-a31dac7e5a6f",
       "expectFailures": []
     }

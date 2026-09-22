@@ -1,6 +1,6 @@
 {
-  "ranAt": "2026-09-21T20:54:08.459Z",
-  "suite": "/Users/saffist3r/Projects/Reduck-Test/web.snapchat.com/tests/critical-cases.json",
+  "ranAt": "2026-09-22T17:28:31.054Z",
+  "suite": "/Users/saffist3r/Projects/Reduck-Test/scripts/web.snapchat.com/tests/critical-cases.json",
   "suiteName": "critical",
   "host": "web.snapchat.com",
   "summary": {
@@ -8,28 +8,28 @@
     "passed": 14,
     "failed": 0,
     "passRate": 1,
-    "totalDurationMs": 0
+    "totalDurationMs": 75451
   },
   "byScript": {
     "check_session": {
       "passed": 2,
       "failed": 0,
-      "durationMs": 0
+      "durationMs": 2902
     },
     "list_chats": {
       "passed": 4,
       "failed": 0,
-      "durationMs": 0
+      "durationMs": 12303
     },
     "open_chat": {
       "passed": 5,
       "failed": 0,
-      "durationMs": 0
+      "durationMs": 34945
     },
     "list_chat_messages": {
       "passed": 3,
       "failed": 0,
-      "durationMs": 0
+      "durationMs": 25301
     }
   },
   "results": [
@@ -40,7 +40,7 @@
       "status": "pass",
       "notes": "loggedIn ((1) Snapchat)",
       "reason": "ok",
-      "durationMs": 0,
+      "durationMs": 2902,
       "runId": "0ebfc516-31d2-4811-92f7-7d479a7a1f01",
       "expectFailures": []
     },
@@ -51,7 +51,7 @@
       "status": "pass",
       "notes": "loggedIn ((1) Snapchat)",
       "reason": "ok",
-      "durationMs": 0,
+      "durationMs": 2902,
       "runId": "0ebfc516-31d2-4811-92f7-7d479a7a1f01",
       "expectFailures": []
     },
@@ -62,7 +62,7 @@
       "status": "pass",
       "notes": "2 chats; first=My AI",
       "reason": "ok",
-      "durationMs": 0,
+      "durationMs": 3945,
       "runId": "3b7c02af-2f56-4b0e-8fb1-60dcdc1d9514",
       "expectFailures": []
     },
@@ -73,7 +73,7 @@
       "status": "pass",
       "notes": "1 chats; first=My AI",
       "reason": "ok",
-      "durationMs": 0,
+      "durationMs": 4095,
       "runId": "c35be95f-8db5-46d4-8e73-fa14f328a303",
       "expectFailures": []
     },
@@ -84,7 +84,7 @@
       "status": "pass",
       "notes": "2 chats; first=My AI",
       "reason": "ok",
-      "durationMs": 0,
+      "durationMs": 4263,
       "runId": "786cd5f5-b1a7-4019-8c93-023d18a894bf",
       "expectFailures": []
     },
@@ -95,7 +95,7 @@
       "status": "pass",
       "notes": "2 chats; first=My AI",
       "reason": "ok",
-      "durationMs": 0,
+      "durationMs": 4263,
       "runId": "786cd5f5-b1a7-4019-8c93-023d18a894bf",
       "expectFailures": []
     },
@@ -106,7 +106,7 @@
       "status": "pass",
       "notes": "opened My AI",
       "reason": "ok",
-      "durationMs": 0,
+      "durationMs": 10122,
       "runId": "55d6be51-a81e-4d5d-b89a-65d78f508b4b",
       "expectFailures": []
     },
@@ -117,7 +117,7 @@
       "status": "pass",
       "notes": "opened My AI",
       "reason": "ok",
-      "durationMs": 0,
+      "durationMs": 10078,
       "runId": "02edbbfe-e541-45b1-b302-1829e7214ffd",
       "expectFailures": []
     },
@@ -128,7 +128,7 @@
       "status": "pass",
       "notes": "opened Team Snapchat",
       "reason": "ok",
-      "durationMs": 0,
+      "durationMs": 10310,
       "runId": "ed932abf-a1f3-4e97-a2e5-d436c53087f2",
       "expectFailures": []
     },
@@ -139,7 +139,7 @@
       "status": "pass",
       "notes": "notFound; available=My AI|Team Snapchat",
       "reason": "ok",
-      "durationMs": 0,
+      "durationMs": 4435,
       "runId": "4c0ed429-222c-435b-bf70-ef931479f982",
       "expectFailures": []
     },
@@ -161,7 +161,7 @@
       "status": "pass",
       "notes": "count 10",
       "reason": "ok",
-      "durationMs": 0,
+      "durationMs": 10415,
       "runId": "8e01bef5-fba2-4fe6-91a1-18b5988cc973",
       "expectFailures": []
     },
@@ -172,7 +172,7 @@
       "status": "pass",
       "notes": "count 3",
       "reason": "ok",
-      "durationMs": 0,
+      "durationMs": 10394,
       "runId": "72043386-95f2-4e4b-9f7c-354f3318efe2",
       "expectFailures": []
     },
@@ -183,8 +183,8 @@
       "status": "pass",
       "notes": "chat notFound",
       "reason": "ok",
-      "durationMs": 0,
-      "runId": null,
+      "durationMs": 4492,
+      "runId": "9356c624-09da-4fd9-9228-16e94e89de55",
       "expectFailures": []
     }
   ]

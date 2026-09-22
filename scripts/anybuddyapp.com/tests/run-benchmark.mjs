@@ -242,7 +242,7 @@ function renderMarkdown(report) {
     `- **Host:** ${report.host}`,
     `- **Suite:** \`${report.suite}\``,
     `- **Result:** **${report.summary.passed}/${report.summary.total} passed** (${pct}%)`,
-    `- **Total duration:** ${(report.summary.totalDurationMs / 1000).toFixed(1)}s (sum of case durations)`,
+    `- **Script time:** ${(report.summary.totalDurationMs / 1000).toFixed(1)}s total (sum of Reduck step-trace durations per run; excludes browser startup)`,
     ``,
     `## By script`,
     ``,

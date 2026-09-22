@@ -280,11 +280,18 @@ function evaluateSuite(suite, runs, casesPath) {
 
   const passed = results.filter((r) => r.status === "pass").length;
   const failed = results.length - passed;
+  // Several cases can be scored from one run: count each runId's time once.
+  const timed = new Set();
+  let totalDurationMs = 0;
   const byScript = {};
   for (const r of results) {
     byScript[r.script] ??= { passed: 0, failed: 0, durationMs: 0 };
     byScript[r.script][r.status === "pass" ? "passed" : "failed"] += 1;
+    const key = r.runId || `case:${r.id}`;
+    if (timed.has(key)) continue;
+    timed.add(key);
     byScript[r.script].durationMs += r.durationMs || 0;
+    totalDurationMs += r.durationMs || 0;
   }
 
   return {
@@ -297,7 +304,7 @@ function evaluateSuite(suite, runs, casesPath) {
       passed,
       failed,
       passRate: results.length ? passed / results.length : 0,
-      totalDurationMs: results.reduce((a, r) => a + (r.durationMs || 0), 0),
+      totalDurationMs,
     },
     byScript,
     results: results.map((r) => ({
@@ -327,7 +334,7 @@ function renderMarkdown(report) {
     `- **Host:** ${report.host}`,
     `- **Suite:** \`${report.suite}\``,
     `- **Result:** **${report.summary.passed}/${report.summary.total} passed** (${pct}%)`,
-    `- **Total duration:** ${(report.summary.totalDurationMs / 1000).toFixed(1)}s (sum of case durations)`,
+    `- **Script time:** ${(report.summary.totalDurationMs / 1000).toFixed(1)}s total (sum of Reduck step-trace durations per run; excludes browser startup)`,
     ``,
     `## By script`,
     ``,
@@ -342,14 +349,14 @@ function renderMarkdown(report) {
   }
 
   lines.push(``, `## Cases`, ``);
-  lines.push(`| Case | Tag | Script | Status | Notes |`);
-  lines.push(`| --- | --- | --- | --- | --- |`);
+  lines.push(`| Case | Tag | Script | Status | Duration | Notes |`);
+  lines.push(`| --- | --- | --- | --- | ---: | --- |`);
 
   for (const r of report.results) {
     const icon = r.status === "pass" ? "PASS" : "FAIL";
     const notes = (r.notes || r.reason || "").replace(/\|/g, "/");
     lines.push(
-      `| ${r.id} | ${r.tag || ""} | ${r.script} | ${icon} | ${notes} |`,
+      `| ${r.id} | ${r.tag || ""} | ${r.script} | ${icon} | ${((r.durationMs || 0) / 1000).toFixed(1)}s | ${notes} |`,
     );
   }
 

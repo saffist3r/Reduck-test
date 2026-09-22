@@ -31,4 +31,6 @@ node scripts/web.snapchat.com/tests/run-benchmark.mjs \
   --out write
 ```
 
+Run files hold each case’s Reduck `runId`, result and `durationMs`. `durationMs` is the sum of the run’s step-trace durations (`read_run_trace`), so it excludes browser startup. Cases scored from the same run count its time once.
+
 Static: `npm test` from repo root (includes this folder’s `*.test.js`).

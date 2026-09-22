@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-09-22T17:22:50.578Z",
+  "ranAt": "2026-09-22T17:28:31.103Z",
   "suite": "/Users/saffist3r/Projects/Reduck-Test/scripts/web.snapchat.com/tests/write-cases.json",
   "suiteName": "write",
   "host": "web.snapchat.com",
@@ -8,13 +8,13 @@
     "passed": 2,
     "failed": 0,
     "passRate": 1,
-    "totalDurationMs": 0
+    "totalDurationMs": 15796
   },
   "byScript": {
     "send_chat_image": {
       "passed": 2,
       "failed": 0,
-      "durationMs": 0
+      "durationMs": 15796
     }
   },
   "results": [
@@ -25,7 +25,7 @@
       "status": "pass",
       "notes": "",
       "reason": "ok",
-      "durationMs": 0,
+      "durationMs": 11377,
       "runId": "67d85362-9e23-4441-b162-45a68b1ff06e",
       "expectFailures": []
     },
@@ -36,7 +36,7 @@
       "status": "pass",
       "notes": "",
       "reason": "ok",
-      "durationMs": 0,
+      "durationMs": 4419,
       "runId": "04d554fc-9cd1-431c-99fa-b65a5d510bea",
       "expectFailures": []
     }
