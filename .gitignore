@@ -1,5 +1,5 @@
 node_modules/
-ReDuckHunt/node_modules/
-ReDuckHunt/test-results/
+tools/ReDuckHunt/node_modules/
+tools/ReDuckHunt/test-results/
 .DS_Store
 *.log

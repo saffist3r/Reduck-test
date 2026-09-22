@@ -5,7 +5,7 @@ Reduck scripts for a **morning chat digest** on Snapchat for Web.
 ## Layout
 
 ```
-web.snapchat.com/
+scripts/web.snapchat.com/
   scripts/          # local script.js + meta.json mirrors
   docs/             # SCOPE, QA, SCRIPTS, Loom outline
   tests/            # cases.json + run-benchmark.mjs

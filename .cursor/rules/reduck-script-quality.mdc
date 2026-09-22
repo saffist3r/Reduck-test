@@ -1,12 +1,12 @@
 ---
-description: Quality bar for Reduck scripts under web.snapchat.com
-globs: web.snapchat.com/**
+description: Quality bar for Reduck scripts under scripts/web.snapchat.com
+globs: scripts/web.snapchat.com/**
 alwaysApply: false
 ---
 
 # Reduck script quality
 
-Local mirrors live in `web.snapchat.com/scripts/<slug>/{script.js,meta.json}`. Reduck address stays `@handle/web.snapchat.com/<slug>` (not under `scripts/` on the server).
+Local mirrors live in `scripts/web.snapchat.com/scripts/<slug>/{script.js,meta.json}`. Reduck address stays `@handle/web.snapchat.com/<slug>` (not under `scripts/` on the server).
 
 ## Contracts
 - Validate required `args` up front; throw clear errors.
@@ -25,6 +25,7 @@ Local mirrors live in `web.snapchat.com/scripts/<slug>/{script.js,meta.json}`. R
 - Virtualized lists: only scrape visible rows up to `limit`; document the cap.
 
 ## Tests
-- Every script needs cases in `web.snapchat.com/tests/cases.json` (happy + empty/not-found).
+- Every script needs cases in `scripts/web.snapchat.com/tests/cases.json` (happy + empty/not-found).
 - After suite runs, write `benchmarks/latest.md` via `tests/run-benchmark.mjs`.
+- Offline CI: `tools/ReDuckHunt` (`npm test` from repo root).
 ---

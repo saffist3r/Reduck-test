@@ -1,8 +1,8 @@
 # Anybuddy script tests
 
-Offline CI (meta / syntax / cases shape): see [`ReDuckHunt/`](../../ReDuckHunt/) — `npm test` from repo root. This folder is the **live** Reduck suite.
+Live Reduck suite. Static checks: [`tools/ReDuckHunt`](../../../tools/ReDuckHunt) (`npm test`).
 
-Test matrix: `cases.json`. Local evaluator: `run-benchmark.mjs`.
+Test matrix: `cases.json`. Evaluator: `run-benchmark.mjs`.
 
 ## Cases
 
@@ -29,7 +29,7 @@ It will:
 3. Run:
 
 ```bash
-node anybuddyapp.com/tests/run-benchmark.mjs --from-runs anybuddyapp.com/tests/.last-runs.json
+node scripts/anybuddyapp.com/tests/run-benchmark.mjs --from-runs scripts/anybuddyapp.com/tests/.last-runs.json
 ```
 
 Outputs:

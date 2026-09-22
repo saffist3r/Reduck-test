@@ -1,25 +1,18 @@
 # Reduck-test
 
-Reduck browser-automation projects (handle `@saffist3r`).
+Reduck scripts for `@saffist3r`.
 
-| Folder | What it is |
-|--------|------------|
-| [`anybuddyapp.com/`](anybuddyapp.com/) | Court booking search — locations, clubs, matches |
-| [`web.snapchat.com/`](web.snapchat.com/) | Snapchat for Web — morning chat digest (take-home) |
-| [`ReDuckHunt/`](ReDuckHunt/) | Local + CI script test framework (Vitest) |
+```
+scripts/anybuddyapp.com/   # court booking
+scripts/web.snapchat.com/  # Snapchat Web digest
+tools/ReDuckHunt/          # Vitest checks for those scripts
+```
 
-Each host has its own `README.md`, scripts, tests, and benchmarks.
-
-## Tests (CI)
-
-No live Reduck E2E in CI. Script contract / syntax / cases shape:
+## Test
 
 ```bash
-cd ReDuckHunt && npm install && npm test
-# or from root after ReDuckHunt install:
+npm install --prefix tools/ReDuckHunt
 npm test
 ```
 
-Reports: `ReDuckHunt/test-results/` (JUnit + HTML + **`report.md`**). On GitHub Actions the same Markdown is posted as the **job summary**. Workflow: [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
-
-Live host suites remain agent-driven (`run-benchmark.mjs` + Reduck MCP).
+CI runs the same thing. Report: `tools/ReDuckHunt/test-results/report.md`.

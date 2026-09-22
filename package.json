@@ -1,10 +1,10 @@
 {
   "name": "reduck-test",
   "private": true,
-  "description": "Reduck host scripts monorepo — tests live in ReDuckHunt/",
+  "description": "Reduck scripts monorepo — scripts/ + tools/ReDuckHunt",
   "scripts": {
-    "test": "npm test --prefix ReDuckHunt",
-    "test:watch": "npm run test:watch --prefix ReDuckHunt",
-    "test:report": "npm run test:report --prefix ReDuckHunt"
+    "test": "npm test --prefix tools/ReDuckHunt",
+    "test:watch": "npm run test:watch --prefix tools/ReDuckHunt",
+    "test:report": "npm run test:report --prefix tools/ReDuckHunt"
   }
 }

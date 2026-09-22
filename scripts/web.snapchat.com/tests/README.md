@@ -1,6 +1,6 @@
 # Snapchat Web tests
 
-Offline CI (meta / syntax / cases shape): see [`ReDuckHunt/`](../../ReDuckHunt/) — `npm test` from repo root. This folder is the **live** Reduck suite.
+Live Reduck suite. Static checks: [`tools/ReDuckHunt`](../../../tools/ReDuckHunt) (`npm test`).
 
 ## Suites
 
@@ -29,17 +29,17 @@ Evaluator: `run-benchmark.mjs`
 3. Evaluate:
 
 ```bash
-node web.snapchat.com/tests/run-benchmark.mjs \
-  --from-runs web.snapchat.com/tests/.critical-runs.json \
-  --cases web.snapchat.com/tests/critical-cases.json \
+node scripts/web.snapchat.com/tests/run-benchmark.mjs \
+  --from-runs scripts/web.snapchat.com/tests/.critical-runs.json \
+  --cases scripts/web.snapchat.com/tests/critical-cases.json \
   --out critical
 ```
 
 Smoke:
 
 ```bash
-node web.snapchat.com/tests/run-benchmark.mjs \
-  --from-runs web.snapchat.com/tests/.last-runs.json
+node scripts/web.snapchat.com/tests/run-benchmark.mjs \
+  --from-runs scripts/web.snapchat.com/tests/.last-runs.json
 ```
 
 ## Safety

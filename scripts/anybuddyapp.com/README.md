@@ -18,10 +18,10 @@ Use `search_locations` first. City candidates return slugs like `lyon-69000-fr` 
 
 | Folder | Reduck address |
 |--------|----------------|
-| `anybuddyapp.com/search_locations/` | `@saffist3r/anybuddyapp.com/search_locations` |
-| `anybuddyapp.com/search_clubs/` | `@saffist3r/anybuddyapp.com/search_clubs` |
-| `anybuddyapp.com/get_club/` | `@saffist3r/anybuddyapp.com/get_club` |
-| `anybuddyapp.com/list_public_matches/` | `@saffist3r/anybuddyapp.com/list_public_matches` |
+| `search_locations/` | `@saffist3r/anybuddyapp.com/search_locations` |
+| `search_clubs/` | `@saffist3r/anybuddyapp.com/search_clubs` |
+| `get_club/` | `@saffist3r/anybuddyapp.com/get_club` |
+| `list_public_matches/` | `@saffist3r/anybuddyapp.com/list_public_matches` |
 
 Each script folder contains `script.js` (body) and `meta.json` (name, schemas, flags).
 

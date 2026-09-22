@@ -9,17 +9,17 @@ on:
 jobs:
   reduckhunt:
     name: ReDuckHunt (script tests)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults:
       run:
-        working-directory: ReDuckHunt
+        working-directory: tools/ReDuckHunt
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
-          node-version: "22"
+          node-version: "24"
           cache: npm
-          cache-dependency-path: ReDuckHunt/package-lock.json
+          cache-dependency-path: tools/ReDuckHunt/package-lock.json
       - run: npm ci
       - name: Run tests
         id: test
@@ -35,8 +35,8 @@ jobs:
           fi
       - name: Upload test results
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: reduckhunt-test-results
-          path: ReDuckHunt/test-results/
+          path: tools/ReDuckHunt/test-results/
           if-no-files-found: ignore

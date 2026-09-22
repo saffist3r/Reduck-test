@@ -10,9 +10,9 @@ const files = discoverCasesFiles();
 describe("cases.json shape", () => {
   it("finds smoke + critical case files", () => {
     const rels = files.map((f) => f.relative);
-    expect(rels).toContain("anybuddyapp.com/tests/cases.json");
-    expect(rels).toContain("web.snapchat.com/tests/cases.json");
-    expect(rels).toContain("web.snapchat.com/tests/critical-cases.json");
+    expect(rels).toContain("scripts/anybuddyapp.com/tests/cases.json");
+    expect(rels).toContain("scripts/web.snapchat.com/tests/cases.json");
+    expect(rels).toContain("scripts/web.snapchat.com/tests/critical-cases.json");
   });
 
   it.each(files.map((f) => [f.relative, f]))(
