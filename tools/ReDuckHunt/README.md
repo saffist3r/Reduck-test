@@ -1,6 +1,6 @@
 # ReDuckHunt
 
-Vitest checks for scripts under `scripts/`.
+Vitest checks for whatever lives under `scripts/<host>/`.
 
 ```bash
 npm install
@@ -9,7 +9,8 @@ npm test
 
 From repo root: `npm test`.
 
-Checks: per script folder (`meta.json` + syntax), host `cases.json` shape, `checkExpect` units.
+Auto-discovers:
+- packs: `scripts/<host>/<slug>/` or `scripts/<host>/scripts/<slug>/` (`script.js` + `meta.json`)
+- cases: `scripts/<host>/tests/*.json` with a `cases` array
 
-On GitHub Actions the report is written to the job **Summary** (no download).
-Locally: `test-results/report.md`.
+On GitHub Actions the report is the job **Summary**. Locally: `test-results/report.md`.

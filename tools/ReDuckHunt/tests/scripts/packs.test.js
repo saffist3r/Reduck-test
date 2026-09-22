@@ -1,18 +1,25 @@
 import { describe, it, expect } from "vitest";
 import { existsSync } from "node:fs";
-import { discoverScripts } from "../../lib/discover.js";
+import { discoverHosts, discoverScripts } from "../../lib/discover.js";
 import { checkScriptSyntax } from "../../lib/checkSyntax.js";
 
+const hosts = discoverHosts();
 const scripts = discoverScripts();
-const byHost = Map.groupBy
-  ? Map.groupBy(scripts, (s) => s.host)
-  : scripts.reduce((m, s) => {
-      if (!m.has(s.host)) m.set(s.host, []);
-      m.get(s.host).push(s);
-      return m;
-    }, new Map());
+const byHost = scripts.reduce((m, s) => {
+  if (!m.has(s.host)) m.set(s.host, []);
+  m.get(s.host).push(s);
+  return m;
+}, new Map());
 
 describe("scripts", () => {
+  it("discovers at least one host under scripts/", () => {
+    expect(hosts.length).toBeGreaterThan(0);
+  });
+
+  it("discovers at least one script pack", () => {
+    expect(scripts.length).toBeGreaterThan(0);
+  });
+
   for (const [host, packs] of byHost) {
     describe(host, () => {
       for (const pack of packs) {

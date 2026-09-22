@@ -6,15 +6,18 @@ import {
 } from "../../lib/discover.js";
 
 const files = discoverCasesFiles();
-const byHost = Map.groupBy
-  ? Map.groupBy(files, (f) => f.host)
-  : files.reduce((m, f) => {
-      if (!m.has(f.host)) m.set(f.host, []);
-      m.get(f.host).push(f);
-      return m;
-    }, new Map());
+const byHost = files.reduce((m, f) => {
+  if (!m.has(f.host)) m.set(f.host, []);
+  m.get(f.host).push(f);
+  return m;
+}, new Map());
 
 describe("cases", () => {
+  it("discovers case suites when present", () => {
+    // Hosts without tests/*.json cases are fine; just assert API works.
+    expect(Array.isArray(files)).toBe(true);
+  });
+
   for (const [host, hostFiles] of byHost) {
     describe(host, () => {
       for (const file of hostFiles) {
