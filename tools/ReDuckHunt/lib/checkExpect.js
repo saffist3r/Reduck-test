@@ -58,7 +58,7 @@ export function checkExpect(expect, result, error = null) {
     }
   }
 
-  for (const key of ["clicked", "delivered"]) {
+  for (const key of ["clicked", "delivered", "ambiguous", "sinceFound"]) {
     if (key in expect && !!result?.[key] !== !!expect[key]) {
       failures.push(`${key}: got ${!!result?.[key]}, want ${!!expect[key]}`);
     }
@@ -127,6 +127,16 @@ export function checkExpect(expect, result, error = null) {
     if (!blob.includes(expect.messageTextIncludes.toLowerCase())) {
       failures.push(
         `messageTextIncludes: messages do not include "${expect.messageTextIncludes}"`,
+      );
+    }
+  }
+
+  // Snapchat name matching: candidates[] are chat names
+  if (typeof expect.candidatesInclude === "string") {
+    const names = (result?.candidates || []).map((c) => String(c).toLowerCase());
+    if (!names.includes(expect.candidatesInclude.toLowerCase())) {
+      failures.push(
+        `candidatesInclude: [${names.join(", ")}] does not include "${expect.candidatesInclude}"`,
       );
     }
   }

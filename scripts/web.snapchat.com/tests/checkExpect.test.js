@@ -45,5 +45,22 @@ describe("web.snapchat.com", () => {
         checkExpect({ ok: true, delivered: true }, { ok: false, clicked: true, delivered: false }),
       ).toHaveLength(2);
     });
+
+    it("ambiguous / candidatesInclude for name matching", () => {
+      expect(
+        checkExpect(
+          { ambiguous: true, candidatesInclude: "Team Snapchat" },
+          { ambiguous: true, candidates: ["saffist3r", "Team Snapchat"] },
+        ),
+      ).toEqual([]);
+      expect(
+        checkExpect({ candidatesInclude: "TEST REDUCK" }, { candidates: [] })[0],
+      ).toMatch(/candidatesInclude/);
+    });
+
+    it("sinceFound for replies after an announcement", () => {
+      expect(checkExpect({ sinceFound: true }, { sinceFound: true, count: 0 })).toEqual([]);
+      expect(checkExpect({ sinceFound: true }, { sinceFound: false })[0]).toMatch(/sinceFound/);
+    });
   });
 });

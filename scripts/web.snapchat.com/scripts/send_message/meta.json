@@ -13,7 +13,7 @@
       "name": {
         "type": "string",
         "minLength": 1,
-        "description": "Optional chat display name to open first (e.g. a self-chat or test friend; avoid My AI)."
+        "description": "Optional exact chat display name (friend or group) to open first; partial names are refused with suggestions. Avoid My AI."
       },
       "text": {
         "type": "string",
@@ -40,6 +40,8 @@
       "snippet": { "type": "string" },
       "opened": { "type": ["boolean", "null"] },
       "notFound": { "type": ["boolean", "null"] },
+      "ambiguous": { "type": "boolean" },
+      "candidates": { "type": "array", "items": { "type": "string" } },
       "name": { "type": ["string", "null"] },
       "matchedName": { "type": ["string", "null"] }
     }

@@ -1,6 +1,8 @@
 # QA — Snapchat Web
 
-Issues found while automating `www.snapchat.com/web/` via Reduck (`scripts/web.snapchat.com/`).
+Issues found while automating `www.snapchat.com/web/` via Reduck (`scripts/web.snapchat.com/`), plus what worked well and the account-risk acknowledgment at the end.
+
+Areas: **Reduck** QA-003, 007, 010, 016, 018–022 · **Snapchat** QA-001, 004, 005, 011, 012, 023 · **Both** the rest.
 
 Template: `.cursor/rules/qa-report.mdc`  
 Safety: test account, low rate, read-first.
@@ -74,6 +76,7 @@ Safety: test account, low rate, read-first.
 - **Expected:** `notFound: true`.
 - **Actual:** False open on empty/short row names.
 - **Workaround:** Require meaningful `rowName`; match `===` or `rowName.includes(target)`.
+- **Follow-up (2026-09-22):** `includes` is still wrong for writes: `name: "TEST"` would send to the group `TEST REDUCK`. Now exact name wins everywhere; read scripts accept one partial match, several → `ambiguous` + `candidates`; the write script `send_message` never acts on a partial match and return the suggestions instead.
 - **Date:** 2026-09-21
 
 ### QA-010 — Empty `open_chat.name` fails at schema
@@ -147,3 +150,77 @@ Safety: test account, low rate, read-first.
 - **Actual:** Snapchat sends text first; the row briefly shows `Delivered`, then `Sending…` while the image uploads.
 - **Workaround:** Ignore rows containing `Sending`, pause 1.5s, and re-confirm `Delivered` before returning `ok`.
 - **Date:** 2026-09-22
+
+### QA-018 — `run_script` shows ✓ and `list_runs` shows `success` when the script reports failure
+- **Area:** Reduck
+- **Severity:** P1
+- **Steps:** Run `send_message` so it returns `{ ok: false, error: "composer not found …" }` (run `e134a9f0-cb50-4b06-9bb2-3c5cbc7b17e5`). Look at the `run_script` reply, then `list_runs`.
+- **Expected:** Some signal that the script's own contract failed (`ok: false`), or a documented convention for it.
+- **Actual:** The reply starts with `✓ ok: false`, and `list_runs` lists the run as `success`. Only a thrown error counts as a failure, so the run list can't show which sends didn't happen.
+- **Workaround:** Our benchmarks check `result.ok` / `delivered` themselves. Suggestion: flag `ok: false` results in the run status, or at least drop the ✓.
+- **Date:** 2026-09-22
+
+### QA-019 — A new script can't start as a draft once the private quota is full
+- **Area:** Reduck
+- **Severity:** P2
+- **Steps:** With 3 private scripts already owned, `create_script { draft: true }` for `send_message`.
+- **Expected:** An untested first version that isn't live yet.
+- **Actual:** “You've reached your plan's limit of 3 private scripts.” Drafts are private, and `draft` “cannot be combined with visibility 'public'”, so the only option is to publish v1 untested.
+- **Workaround:** Publish v1 public, then iterate with `create_draft_script_version` + `run_script { version_id }` (drafts of a public script are allowed). Suggestion: don't count drafts against the private quota.
+- **Date:** 2026-09-22
+
+### QA-020 — `run_script.waitForSeconds` max (60) is only discoverable by error
+- **Area:** Reduck
+- **Severity:** P3
+- **Steps:** `run_script { …, waitForSeconds: 90 }` for a send that can take ~60s.
+- **Expected:** The limit in the tool description, or clamping.
+- **Actual:** `Input validation error … too_big … expected number to be <=60`; nothing ran.
+- **Workaround:** Use ≤60 and read longer runs later with `read_run_results`.
+- **Date:** 2026-09-22
+
+### QA-021 — `list_runs` can't filter by script and has no duration
+- **Area:** Reduck
+- **Severity:** P2
+- **Steps:** `list_runs { host, slug, limit }` to find the last `send_message` runs and their timings.
+- **Expected:** Filter by script; duration per run.
+- **Actual:** `slug` / `limit` are rejected (“slug belongs to a script, not to the run”); only `status`, `host`, `page`. Rows have a start time but no duration, so benchmark timings need one `read_run_trace` per run, summing `step_trace[].durationMs`.
+- **Workaround:** Filter by host and read traces (done for every benchmark here).
+- **Date:** 2026-09-22
+
+### QA-022 — Caller mistakes surface as `internal_error` “try again later”
+- **Area:** Reduck
+- **Severity:** P2
+- **Steps:** Pass a Playwright Locator to `builtins.paste` (QA-016); run `29b699bd-c4a9-4745-9d76-9ba3a1dc42a6`.
+- **Expected:** “paste expects a Sel (CSS string or {kind,…}[]), got Locator”.
+- **Actual:** `Unknown ReduckStep kind: undefined` + `⚠ internal_error — … please try again later or with different parameters`. Retrying would never help.
+- **Workaround:** Read the builtins reference (`Sel` type) in `authoring_scripts`.
+- **Date:** 2026-09-22
+
+### QA-023 — Group chats: member name tags read as messages, sender labels equal chat names
+- **Area:** Snapchat
+- **Severity:** P2
+- **Steps:** `list_chat_messages { name: "TEST REDUCK", since: "hosting a party at my place" }` (run `df05e4a1-9376-40c3-a990-4b00aa13499d`).
+- **Expected:** Only the replies: `Yesss I’m in` from Fatma, then my update.
+- **Actual:** Two extra “messages” `saffist3r` and `Fatma` (the group's member tags next to the composer). A first fix that dropped any text equal to a chat name also dropped the caps sender label `FATMA BOUZID`, so her reply came back as `from: me` (run `2c7f63b8-3657-4c19-bab0-98ee1d099a3e`).
+- **Workaround:** Read caps sender labels first, then drop bare chat names / first names. Clean result in run `87e1c0b7-33a6-4754-ac48-3b27a42fe1c6`.
+- **Date:** 2026-09-22
+
+## What worked well (Reduck)
+
+- **Saved scripts + `loggedIn: true`**: cookie injection from the paired Chrome just worked for every Snapchat run; no login automation needed.
+- **Draft versions**: `create_draft_script_version` with `edits` + `run_script { version_id }` made fix → retest loops cheap without touching the live version. `promote_script_version` / `archive_script` made the `send_chat_image` → `send_message` swap clean.
+- **`read_run_trace`**: step trace + failing/final screenshots diagnosed QA-015 (tab takeover) in one call, with no rerun.
+- **`list_runs` args column**: an audit trail of exactly what was sent to whom.
+- **Script contracts**: JSON Schema input validation catches bad args before a browser opens (QA-010), which is also a safety net for write scripts.
+- **Builtins**: `uploadFile` with in-memory bytes and `paste` (CDP insertText) handled Snapchat's rich composer with no flakiness once used correctly.
+
+## Snapchat account risk — acknowledgment
+
+I understand that automating Snapchat can get an account flagged or banned as a bot. For this work:
+
+- I used a **dedicated test account**, not my personal one. The self-chat `saffist3r` and the group `TEST REDUCK` belong to that test account; the only other member is a consenting friend.
+- Runs were **sequential and slow** (one at a time, a human pause between sends, about a dozen sends in total over two days).
+- There was **no bulk messaging, no messages to strangers, no friend adds**, and the My AI terms prompt was never accepted by a script.
+- If Snapchat challenges the account (captcha, logout, warning), I stop, log it here, and don't retry.
+
+Details: [BAN_RISKS.md](BAN_RISKS.md).

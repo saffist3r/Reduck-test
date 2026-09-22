@@ -7,6 +7,7 @@ Repo: `scripts/web.snapchat.com/tests/`
 | `cases.json` | Smoke (5 read) | `../benchmarks/latest.md` |
 | `critical-cases.json` | Edges (14 read) | `../benchmarks/critical.md` |
 | `write-cases.json` | Write smoke (`send_message`: text, image + text, not found) | `../benchmarks/write.md` |
+| `scope-cases.json` | Event scope end to end: exact-name safety, group send, replies `since`, matching regression | `../benchmarks/scope.md` |
 | `fixtures/send-test.png` | Tiny PNG for the image case | — |
 | `checkExpect.test.js` | Host expect keys via ReDuckHunt | Actions Summary |
 | `run-benchmark.mjs` | Score Reduck run JSON | benchmarks + history |
@@ -29,6 +30,12 @@ node scripts/web.snapchat.com/tests/run-benchmark.mjs \
   --from-runs scripts/web.snapchat.com/tests/.write-runs.json \
   --cases scripts/web.snapchat.com/tests/write-cases.json \
   --out write
+
+# scope (after .scope-runs.json)
+node scripts/web.snapchat.com/tests/run-benchmark.mjs \
+  --from-runs scripts/web.snapchat.com/tests/.scope-runs.json \
+  --cases scripts/web.snapchat.com/tests/scope-cases.json \
+  --out scope
 ```
 
 Run files hold each case’s Reduck `runId`, result and `durationMs`. `durationMs` is the sum of the run’s step-trace durations (`read_run_trace`), so it excludes browser startup. Cases scored from the same run count its time once.

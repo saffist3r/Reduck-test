@@ -42,60 +42,48 @@ async function openChatByName(want) {
   await dismissTooManyTabs();
   await page.waitForTimeout(1500);
 
+  // Writes only act on an exact (case-insensitive) name: partial matches are suggestions, never targets.
   const match = await page.evaluate((targetRaw) => {
     const target = String(targetRaw || '').toLowerCase().trim();
-    if (!target) return { found: false, available: [] };
-    const items = [...document.querySelectorAll('[role="listitem"]')];
-    const available = [];
-    let best = null;
-    for (const el of items) {
-      const lines = (el.innerText || '')
-        .trim()
-        .split(/\n+/)
-        .map((l) => l.trim())
-        .filter(Boolean);
-      const label = lines[0] || '';
-      if (label.length >= 2) available.push(label);
-      const low = label.toLowerCase();
-      if (low === target || low.includes(target)) {
-        best = { label, index: items.indexOf(el) };
-        if (low === target) break;
-      }
+    const rows = [...document.querySelectorAll('[role="listitem"]')]
+      .map((li, index) => ({ index, label: ((li.innerText || '').trim().split(/\n+/)[0] || '').trim() }))
+      .filter((r) => r.label.length >= 2);
+    const available = rows.map((r) => r.label);
+    const exact = rows.filter((r) => r.label.toLowerCase() === target);
+    if (exact.length === 1) {
+      return { status: 'found', matchedName: exact[0].label, index: exact[0].index, available };
     }
-    return best
-      ? { found: true, matchedName: best.label, index: best.index, available }
-      : { found: false, available };
+    if (exact.length > 1) return { status: 'ambiguous', candidates: exact.map((r) => r.label), available };
+    const candidates = rows.filter((r) => r.label.toLowerCase().includes(target)).map((r) => r.label);
+    return { status: 'notFound', candidates, available };
   }, want);
 
-  if (!match.found) {
+  if (match.status !== 'found') {
     return {
       ok: false,
       delivered: false,
       opened: false,
-      notFound: true,
+      notFound: match.status === 'notFound',
+      ambiguous: match.status === 'ambiguous',
+      candidates: match.candidates,
       name: want,
       available: match.available || [],
-      error: 'chat not found',
+      error:
+        match.status === 'ambiguous'
+          ? 'several chats have this exact name; not sending'
+          : match.candidates.length
+            ? `no chat named exactly "${want}" (did you mean: ${match.candidates.join(', ')}?)`
+            : 'chat not found',
     };
   }
 
-  // Prefer row click via hasText (same as open_chat) — raw nth click can hit the camera icon.
+  // Click the row whose name is exactly the match — hasText alone can hit a row that only mentions it.
   await page
     .locator('[role="listitem"]')
-    .filter({ hasText: match.matchedName })
+    .filter({ has: page.getByText(match.matchedName, { exact: true }) })
     .first()
     .click({ timeout: 10000 })
-    .catch(async () => {
-      await page.evaluate((targetLabel) => {
-        const target = String(targetLabel || '').toLowerCase();
-        const li = [...document.querySelectorAll('[role="listitem"]')].find((el) => {
-          const n = ((el.innerText || '').trim().split(/\n+/)[0] || '').toLowerCase();
-          return n.length >= 2 && (n === target || n.includes(target));
-        });
-        const btn = li?.querySelector('[role="button"]') || li;
-        btn?.click();
-      }, match.matchedName);
-    });
+    .catch(() => page.locator('[role="listitem"]').nth(match.index).click({ timeout: 10000 }));
 
   await page.waitForTimeout(3000);
   await dismissTooManyTabs();

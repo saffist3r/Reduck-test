@@ -26,29 +26,27 @@ await page.waitForFunction(() => {
 await dismissTooManyTabs();
 await page.waitForTimeout(1500);
 
+// Exact (case-insensitive) wins; else a single partial match; several partial → ambiguous.
 const match = await page.evaluate((want) => {
   const target = want.toLowerCase();
-  const items = [...document.querySelectorAll('[role="listitem"]')];
-  for (const li of items) {
-    const raw = (li.innerText || '').trim();
-    const lines = raw.split(/\n+/).map((l) => l.trim()).filter(Boolean);
-    const rowName = (lines[0] || '').toLowerCase();
-    if (!rowName || rowName.length < 2) continue;
-    // Match exact or row contains query — never query.contains(row) (empty/short rows false-positive)
-    if (rowName === target || rowName.includes(target)) {
-      return { found: true, name: lines[0], raw: raw.slice(0, 200) };
-    }
-  }
-  return { found: false, name: null, available: items.map((li) => {
-    const lines = (li.innerText || '').trim().split(/\n+/).map((l) => l.trim()).filter(Boolean);
-    return lines[0] || null;
-  }).filter(Boolean) };
+  const rows = [...document.querySelectorAll('[role="listitem"]')]
+    .map((li, index) => ({ index, label: ((li.innerText || '').trim().split(/\n+/)[0] || '').trim() }))
+    .filter((r) => r.label.length >= 2);
+  const available = rows.map((r) => r.label);
+  const exact = rows.filter((r) => r.label.toLowerCase() === target);
+  const partial = rows.filter((r) => r.label.toLowerCase() !== target && r.label.toLowerCase().includes(target));
+  const hit = exact.length === 1 ? exact[0] : exact.length === 0 && partial.length === 1 ? partial[0] : null;
+  if (hit) return { status: 'found', name: hit.label, index: hit.index, available };
+  const candidates = (exact.length > 1 ? exact : partial).map((r) => r.label);
+  return { status: candidates.length > 1 ? 'ambiguous' : 'notFound', candidates, available };
 }, name);
 
-if (!match.found) {
+if (match.status !== 'found') {
   return {
     opened: false,
-    notFound: true,
+    notFound: match.status === 'notFound',
+    ambiguous: match.status === 'ambiguous',
+    candidates: match.candidates,
     name,
     matchedName: null,
     available: match.available || [],
@@ -56,17 +54,13 @@ if (!match.found) {
   };
 }
 
-await page.locator('[role="listitem"]').filter({ hasText: match.name }).first().click({ timeout: 10000 }).catch(async () => {
-  await page.evaluate((want) => {
-    const target = want.toLowerCase();
-    const li = [...document.querySelectorAll('[role="listitem"]')].find((el) => {
-      const n = ((el.innerText || '').trim().split(/\n+/)[0] || '').toLowerCase();
-      return n.length >= 2 && (n === target || n.includes(target));
-    });
-    const btn = li?.querySelector('[role="button"]') || li;
-    btn?.click();
-  }, match.name);
-});
+// Click the row whose name is exactly the match — hasText alone can hit a row that only mentions it.
+await page
+  .locator('[role="listitem"]')
+  .filter({ has: page.getByText(match.name, { exact: true }) })
+  .first()
+  .click({ timeout: 10000 })
+  .catch(() => page.locator('[role="listitem"]').nth(match.index).click({ timeout: 10000 }));
 
 // Human-paced delay after open
 await page.waitForTimeout(3000);
@@ -85,6 +79,7 @@ const after = await page.evaluate((want) => {
 return {
   opened: !after.tooManyTabs,
   notFound: false,
+  ambiguous: false,
   name,
   matchedName: match.name,
   composerHint: !!after.composerHint,

@@ -1,0 +1,85 @@
+{
+  "host": "web.snapchat.com",
+  "suite": "scope",
+  "description": "End-to-end event scope: exact-name safety, announcement to a group, replies since the announcement, plus regression of the new name matching. Run ONCE, sequentially. The group case sends one real message to TEST REDUCK. See docs/BAN_RISKS.md.",
+  "cases": [
+    {
+      "id": "scope-open-ambiguous",
+      "script": "open_chat",
+      "args": { "name": "a" },
+      "tag": "safety",
+      "expect": {
+        "opened": false,
+        "notFound": false,
+        "ambiguous": true,
+        "candidatesInclude": "Team Snapchat"
+      }
+    },
+    {
+      "id": "scope-send-partial-refused",
+      "script": "send_message",
+      "args": { "name": "TEST", "text": "should not send" },
+      "tag": "safety",
+      "expect": {
+        "opened": false,
+        "notFound": true,
+        "delivered": false,
+        "candidatesInclude": "TEST REDUCK"
+      }
+    },
+    {
+      "id": "scope-send-group",
+      "script": "send_message",
+      "args": {
+        "name": "TEST REDUCK",
+        "text": "Hey everyone! We're hosting a party at my place tomorrow night. Come through, and let me know if you're in!"
+      },
+      "tag": "write",
+      "expect": {
+        "ok": true,
+        "clicked": true,
+        "delivered": true,
+        "opened": true,
+        "notFound": false
+      }
+    },
+    {
+      "id": "scope-replies-since",
+      "script": "list_chat_messages",
+      "args": { "name": "TEST REDUCK", "since": "hosting a party at my place", "limit": 20 },
+      "tag": "replies",
+      "expect": {
+        "opened": true,
+        "notFound": false,
+        "sinceFound": true,
+        "minCount": 1,
+        "messageTextIncludes": "I’m in"
+      }
+    },
+    {
+      "id": "scope-regress-open-partial",
+      "script": "open_chat",
+      "args": { "name": "Team Snap" },
+      "tag": "regression",
+      "expect": {
+        "ok": true,
+        "opened": true,
+        "notFound": false,
+        "ambiguous": false
+      }
+    },
+    {
+      "id": "scope-regress-messages-my-ai",
+      "script": "list_chat_messages",
+      "args": { "name": "My AI", "limit": 10 },
+      "tag": "regression",
+      "expect": {
+        "ok": true,
+        "opened": true,
+        "minCount": 1,
+        "maxCount": 10,
+        "messageTextIncludes": "AI"
+      }
+    }
+  ]
+}

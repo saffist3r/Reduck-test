@@ -7,6 +7,7 @@ Hard stops for scripts under `scripts/web.snapchat.com/`. See [QA.md](QA.md) · 
 | Choice | Why |
 |--------|-----|
 | No auto-Send in **read** scripts | Ban risk; only `send_message` sends |
+| One chat per `send_message` run | No broadcast lists; several recipients = sequential runs |
 | No friend spam / Story farming | Abuse surface |
 | Web UI only | No unofficial APIs |
 | Text messages only (read) | Media DOM is fragile; sending images is `send_message` |
@@ -42,7 +43,11 @@ Works in catalog: `send_message` (text paste and/or upload via `uploadImages`, t
 
 | Issue | Mitigation |
 |-------|------------|
-| Loose name match | Exact / includes with min length (QA-008) |
+| Name match | Exact wins; reads accept one partial match, else `ambiguous`; writes need the exact name (QA-008) |
+| Only visible chats | Names are matched against the rendered chat list (recent chats). Older chats return `notFound` — open them once in Snapchat, or search is future work |
+| Reply sender | `list_chat_messages.from` comes from Snapchat's caps sender labels; `when` is not parsed |
+| `since` | Matches the last visible message containing the text; history beyond what Web renders is not scrolled |
+| No duplicate guard | Rerunning `send_message` sends the text again; check `list_chat_messages` first if unsure |
 | Empty messages | Structured `messages: []` + note |
 | Multi-tab flake | Close other Web tabs |
 | Send confirmation | `send_message` is `ok` only when the chat row changes after Enter and settles on `Delivered · just now` (no `Sending…`). Rows are matched by display name, so two chats with the same name can confuse it |

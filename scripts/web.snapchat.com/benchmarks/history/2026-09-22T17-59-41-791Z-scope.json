@@ -1,0 +1,98 @@
+{
+  "ranAt": "2026-09-22T17:59:41.791Z",
+  "suite": "/Users/saffist3r/Projects/Reduck-Test/scripts/web.snapchat.com/tests/scope-cases.json",
+  "suiteName": "scope",
+  "host": "web.snapchat.com",
+  "summary": {
+    "total": 6,
+    "passed": 6,
+    "failed": 0,
+    "passRate": 1,
+    "totalDurationMs": 49964
+  },
+  "byScript": {
+    "open_chat": {
+      "passed": 2,
+      "failed": 0,
+      "durationMs": 14072
+    },
+    "send_message": {
+      "passed": 2,
+      "failed": 0,
+      "durationMs": 15641
+    },
+    "list_chat_messages": {
+      "passed": 2,
+      "failed": 0,
+      "durationMs": 20251
+    }
+  },
+  "results": [
+    {
+      "id": "scope-open-ambiguous",
+      "script": "open_chat",
+      "tag": "safety",
+      "status": "pass",
+      "notes": "not opened",
+      "reason": "ok",
+      "durationMs": 4349,
+      "runId": "4d0d4ee1-0a14-4749-be96-02a60c8dd85e",
+      "expectFailures": []
+    },
+    {
+      "id": "scope-send-partial-refused",
+      "script": "send_message",
+      "tag": "safety",
+      "status": "pass",
+      "notes": "chat notFound",
+      "reason": "ok",
+      "durationMs": 4375,
+      "runId": "bcc244b7-3516-475d-8967-519204a3708a",
+      "expectFailures": []
+    },
+    {
+      "id": "scope-send-group",
+      "script": "send_message",
+      "tag": "write",
+      "status": "pass",
+      "notes": "delivered (text)",
+      "reason": "ok",
+      "durationMs": 11266,
+      "runId": "c9ec2293-14a4-45e4-85d7-0e74f3b05ebb",
+      "expectFailures": []
+    },
+    {
+      "id": "scope-replies-since",
+      "script": "list_chat_messages",
+      "tag": "replies",
+      "status": "pass",
+      "notes": "count 2",
+      "reason": "ok",
+      "durationMs": 10172,
+      "runId": "87e1c0b7-33a6-4754-ac48-3b27a42fe1c6",
+      "expectFailures": []
+    },
+    {
+      "id": "scope-regress-open-partial",
+      "script": "open_chat",
+      "tag": "regression",
+      "status": "pass",
+      "notes": "opened Team Snapchat",
+      "reason": "ok",
+      "durationMs": 9723,
+      "runId": "6bd96f08-3a7a-4b7b-956f-049d766d6680",
+      "expectFailures": []
+    },
+    {
+      "id": "scope-regress-messages-my-ai",
+      "script": "list_chat_messages",
+      "tag": "regression",
+      "status": "pass",
+      "notes": "count 4",
+      "reason": "ok",
+      "durationMs": 10079,
+      "runId": "614f47d9-8ca7-4731-b3ef-619f27e4d891",
+      "expectFailures": []
+    }
+  ]
+}

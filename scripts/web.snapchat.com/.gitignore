@@ -2,3 +2,4 @@
 tests/.last-runs.json
 tests/.critical-runs.json
 tests/.write-runs.json
+tests/.scope-runs.json

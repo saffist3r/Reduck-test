@@ -3,7 +3,19 @@
 Not legal advice. Probable risk map from product behavior and common anti-abuse patterns.
 
 **Policy:** test account · read-first · low rate · no spam.  
-Read scripts never Send. `send_message` is the only write — self-chat / test friend, rare runs.
+Read scripts never Send. The one write, `send_message`, only messages a chat that already exists, by exact name.
+
+Guardrails built into `send_message` (not just advice):
+
+| Guardrail | How |
+|-----------|-----|
+| Exact chat name only | Partial names refused with suggestions (`name: "TEST"` never reaches `TEST REDUCK`) |
+| One chat per run | No recipient list; several people = several sequential runs |
+| Confirmed or failed | `ok` only on `Delivered`; no silent retries |
+| Never accept the My AI terms prompt | Stops with `ok: false` |
+| `humanRequired: true`, `sideEffects: write` | Declared on the script |
+
+Account acknowledgment: [QA.md](QA.md#snapchat-account-risk--acknowledgment).
 
 ## Critical
 
@@ -48,7 +60,7 @@ Normal paced list/open/read of a few chats.
 | `list_chats` | `limit` ≤ 20 |
 | `open_chat` | Known names |
 | `list_chat_messages` | Cap `limit`; no Send |
-| `send_message` | Test account; self-chat preferred; never parallel / never blast |
+| `send_message` | People you know; a group + a few friends per event; ≥20s between runs; never parallel, never on a schedule |
 
 ## If challenged
 

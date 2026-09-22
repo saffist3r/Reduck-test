@@ -4,13 +4,17 @@ Handle: `@saffist3r`
 Local mirrors: `scripts/web.snapchat.com/scripts/<slug>/{script.js,meta.json}`  
 URL: `https://www.snapchat.com/web/` (Reduck host id stays `web.snapchat.com`)
 
+Use case: announce an event or an update to friends and groups, then collect replies ([SCOPE](SCOPE.md)).
+
 Read four: `loggedIn: true`, `sideEffects: none`, `visibility: public`, never Send.  
-Write one: `send_message` (`sideEffects: write`, `humanRequired: true`) — test account only.
+Write one: `send_message` (`sideEffects: write`, `humanRequired: true`) — test account only. Several recipients = several runs, one after another.
 
 ```
-check_session → list_chats → open_chat → list_chat_messages
-                                      ↘ send_message (write)
+check_session → list_chats → send_message (per group / friend) → list_chat_messages { since }
+                          ↘ open_chat (read-only helper)
 ```
+
+**Name matching (all scripts):** exact, case-insensitive name wins. Read scripts also accept a single partial match; several partial matches → `ambiguous: true` + `candidates[]`. Write scripts act **only** on an exact name — a partial match returns `notFound` with `candidates[]` as suggestions (QA-008).
 
 ---
 
@@ -50,9 +54,7 @@ Open a chat by display name from `list_chats`. Read-only navigation.
 | | |
 |--|--|
 | **Args** | `name` (required, minLength 1) |
-| **Returns** | `opened`, `name`, `url`; `notFound`, `matchedName`, `available[]`, `composerHint`, `tooManyTabs`, `title` |
-
-Match: exact or `rowName.includes(target)` with a meaningful row name (see QA-008).
+| **Returns** | `opened`, `name`, `url`; `notFound`, `ambiguous`, `candidates[]`, `matchedName`, `available[]`, `composerHint`, `tooManyTabs`, `title` |
 
 ---
 
@@ -60,13 +62,13 @@ Match: exact or `rowName.includes(target)` with a meaningful row name (see QA-00
 
 `@saffist3r/web.snapchat.com/list_chat_messages`
 
-Optionally open by name, then scrape **visible text** bubbles. Empty pane → `count: 0` + `note` (no hang).
+Optionally open by name, then return the newest **visible text** messages. Pass `since` (your announcement text) to get only the replies after it — the RSVP step. `from` comes from Snapchat's caps sender labels (`me`, `FATMA BOUZID`); best effort. Empty pane → `count: 0` + `note` (no hang).
 
 | | |
 |--|--|
-| **Args** | `name` (optional), `limit` (1–50, default 20) |
-| **Returns** | `count`, `messages[]`, `url`; `opened`, `notFound`, `name`, `composerHint`, `tooManyTabs`, `note` |
-| **Message** | `text`, `from`, `when`, `type` |
+| **Args** | `name` (optional), `limit` (1–50, default 20), `since` (optional) |
+| **Returns** | `count`, `messages[]`, `url`; `opened`, `notFound`, `ambiguous`, `candidates[]`, `name`, `since`, `sinceFound`, `composerHint`, `tooManyTabs`, `note` |
+| **Message** | `text`, `from`, `when` (null), `type` |
 
 ---
 
@@ -80,8 +82,8 @@ Optionally open by name, then scrape **visible text** bubbles. Empty pane → `c
 
 | | |
 |--|--|
-| **Args** | `text` (optional); `image.png` (file, optional) — at least one; `name` (optional) |
-| **Returns** | `ok`, `delivered`, `clicked`, `sentText`, `sentImage`, `error`, `snippet`; open meta: `opened`, `notFound`, `name`, `matchedName`, `available[]` |
+| **Args** | `text` (optional); `image.png` (file, optional) — at least one; `name` (optional, exact) |
+| **Returns** | `ok`, `delivered`, `clicked`, `sentText`, `sentImage`, `error`, `snippet`; open meta: `opened`, `notFound`, `ambiguous`, `candidates[]`, `name`, `matchedName`, `available[]` |
 | **Effects** | `sideEffects: write`, `humanRequired: true` |
 
 Fixture for local smoke: `tests/fixtures/send-test.png`.
