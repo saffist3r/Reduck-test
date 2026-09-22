@@ -1,0 +1,28 @@
+---
+description: Reduck Snapchat take-home — safety, language, and working rules
+alwaysApply: true
+---
+
+# Reduck take-home (Snapchat for Web)
+
+## Safety (non-negotiable)
+- Use a **dedicated Snapchat test account** only — never a personal account.
+- Keep request rate **low**: deliberate delays between navigations and scrapes; no parallel spam runs.
+- Automate only what a normal user would plausibly do. **No** mass DMs, friend spam, Story/Spotlight blasting, engagement farming.
+- Prefer **read** flows. Never auto-Send messages. Do not click Send in any script.
+- Acknowledge account-ban risk in `web.snapchat.com/docs/SCOPE.md` and `web.snapchat.com/docs/QA.md`.
+
+## Scope lock
+- Host: `web.snapchat.com` only (folder `web.snapchat.com/`).
+- Scripts: `check_session`, `list_chats`, `open_chat`, `list_chat_messages` only.
+- No unofficial Snap APIs, no mobile automation.
+
+## Language
+- **English** for code, meta, tests, rules, SCOPE, QA, README.
+- **French** only for Loom narration and the final submission email.
+
+## Working habits
+- Log every notable Reduck or Snapchat friction in `web.snapchat.com/docs/QA.md` while building (not at the end).
+- Discovery via `start_session` + `exec_code`; ship via draft → test → promote.
+- Do not fake success if session/cookies fail — document P0 and unblock auth first.
+---

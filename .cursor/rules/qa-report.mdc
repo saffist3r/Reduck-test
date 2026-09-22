@@ -1,0 +1,27 @@
+---
+description: How to log QA findings for the Reduck take-home
+globs: web.snapchat.com/docs/QA.md,web.snapchat.com/benchmarks/**
+alwaysApply: false
+---
+
+# QA report format
+
+Append findings to `web.snapchat.com/docs/QA.md` as you hit them. Each finding must be specific and reproducible.
+
+## Template
+
+```md
+### QA-NNN — short title
+- **Area:** Reduck | Snapchat | Both
+- **Severity:** P0 | P1 | P2 | P3
+- **Steps:** 1. … 2. …
+- **Expected:** …
+- **Actual:** …
+- **Workaround:** …
+- **Date:** YYYY-MM-DD
+```
+
+Also note what **worked well** (agents, traces, promote flow, etc.) — balanced reports read senior.
+
+Acknowledge Snapchat account-ban risk explicitly in the QA summary.
+---
