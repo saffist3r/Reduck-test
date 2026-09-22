@@ -6,10 +6,10 @@ Hard stops for scripts under `scripts/web.snapchat.com/`. See [QA.md](QA.md) · 
 
 | Choice | Why |
 |--------|-----|
-| No auto-Send in **read** scripts | Ban risk; only `send_chat_image` sends |
+| No auto-Send in **read** scripts | Ban risk; only `send_message` sends |
 | No friend spam / Story farming | Abuse surface |
 | Web UI only | No unofficial APIs |
-| Text messages only (read) | Media DOM is fragile; image send is separate |
+| Text messages only (read) | Media DOM is fragile; sending images is `send_message` |
 
 ## Platform
 
@@ -26,7 +26,7 @@ Hard stops for scripts under `scripts/web.snapchat.com/`. See [QA.md](QA.md) · 
 | Face Lenses need a face | Else preview looks plain | QA-011 |
 | No fake webcam via Reduck | Needs OS virtual cam / Chrome flags | — |
 
-Works in catalog: `send_chat_image` (upload via `uploadImages` + Enter). Camera → Lens → Send To → chat or My Story was probed but not catalogued.
+Works in catalog: `send_message` (text paste and/or upload via `uploadImages`, then Enter). Camera → Lens → Send To → chat or My Story was probed but not catalogued.
 
 ## Reduck
 
@@ -45,7 +45,9 @@ Works in catalog: `send_chat_image` (upload via `uploadImages` + Enter). Camera 
 | Loose name match | Exact / includes with min length (QA-008) |
 | Empty messages | Structured `messages: []` + note |
 | Multi-tab flake | Close other Web tabs |
-| Send confirmation | `send_chat_image` is `ok` only when the chat row shows `Delivered · just now`; a second send within ~1 min could match the earlier row |
-| My AI disclaimer | `send_chat_image` stops with `ok: false`; accept it manually (never automated) |
+| Send confirmation | `send_message` is `ok` only when the chat row changes after Enter and settles on `Delivered · just now` (no `Sending…`). Rows are matched by display name, so two chats with the same name can confuse it |
+| Text + image | Snapchat sends them as two messages (text first); there is no single "image with caption" message | 
+| Multi-tab takeover | Another Snapchat tab can re-show “Too many tabs” after the chat opens; `send_message` keeps dismissing it for 20s while waiting for the composer (QA-015) |
+| My AI disclaimer | `send_message` stops with `ok: false`; accept it manually (never automated) |
 | Benchmark timing | Step-trace sum per run, excludes browser startup; backfilled via `read_run_trace`, not measured by `run-benchmark.mjs` |
 | Ban risk | Test account, low rate — [BAN_RISKS.md](BAN_RISKS.md) |

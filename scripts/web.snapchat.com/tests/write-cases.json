@@ -1,12 +1,25 @@
 {
   "host": "web.snapchat.com",
   "suite": "write",
-  "description": "Write smoke for send_chat_image. Run ONCE with deliberate delay. Test account + self-chat preferred. See docs/BAN_RISKS.md.",
+  "description": "Write smoke for send_message (text, image + text, not found). Run ONCE, sequentially. Test account + self-chat preferred. See docs/BAN_RISKS.md.",
   "cases": [
     {
-      "id": "write-send-image-self",
-      "script": "send_chat_image",
-      "args": { "name": "saffist3r" },
+      "id": "write-send-text-self",
+      "script": "send_message",
+      "args": { "name": "saffist3r", "text": "Reduck send_message test (text only)" },
+      "tag": "write",
+      "expect": {
+        "ok": true,
+        "clicked": true,
+        "delivered": true,
+        "opened": true,
+        "notFound": false
+      }
+    },
+    {
+      "id": "write-send-image-text-self",
+      "script": "send_message",
+      "args": { "name": "saffist3r", "text": "Reduck send_message test (image + text)" },
       "files": { "image.png": "tests/fixtures/send-test.png" },
       "tag": "write",
       "expect": {
@@ -18,10 +31,9 @@
       }
     },
     {
-      "id": "write-send-image-not-found",
-      "script": "send_chat_image",
-      "args": { "name": "zzz-nonexistent-chat-xyz" },
-      "files": { "image.png": "tests/fixtures/send-test.png" },
+      "id": "write-send-not-found",
+      "script": "send_message",
+      "args": { "name": "zzz-nonexistent-chat-xyz", "text": "should not send" },
       "tag": "write",
       "expect": {
         "opened": false,

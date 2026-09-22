@@ -103,7 +103,7 @@ Safety: test account, low rate, read-first.
 - **Workaround:** Story via camera path; files via chat send.
 - **Date:** 2026-09-22
 
-### QA-013 — `send_chat_image` waitFor uploadImages after wrong open
+### QA-013 — `send_chat_image` (now `send_message`) waitFor uploadImages after wrong open
 - **Area:** Both
 - **Severity:** P1
 - **Steps:** Click chat `listitem` by index (camera icon side) or open My AI while disclaimer modal is up.
@@ -119,4 +119,31 @@ Safety: test account, low rate, read-first.
 - **Expected:** Image sends in the open chat.
 - **Actual:** Hits “Send this text to MyAI” → jumps to My AI / disclaimer; preview stays.
 - **Workaround:** Focus composer textbox + `Enter` (blue send arrow has no useful aria-label).
+- **Date:** 2026-09-22
+
+### QA-015 — `send_message`: “Too many tabs” returns after the chat opens
+- **Area:** Both
+- **Severity:** P1
+- **Steps:** Another Snapchat Web tab is open; run `send_message` with `name`.
+- **Expected:** Chat opens, composer appears.
+- **Actual:** Chat URL loads, then the “Too many tabs” overlay comes back → no `uploadImages` input → `composer not found`.
+- **Workaround:** Keep dismissing the overlay in a loop (up to 20s) while waiting for the composer. Still best to close other Web tabs.
+- **Date:** 2026-09-22
+
+### QA-016 — `builtins.paste` rejects a Playwright Locator
+- **Area:** Reduck
+- **Severity:** P2
+- **Steps:** `builtins.paste(page.getByRole('textbox').last(), text)`.
+- **Expected:** Text pasted into the composer.
+- **Actual:** `Unknown ReduckStep kind: undefined` — builtins take a Reduck `Sel` (CSS string or `{kind,…}` array), not a Locator.
+- **Workaround:** `builtins.paste([{ kind: 'role', body: 'textbox' }, { kind: 'last' }], text)`. The old `caption` arg of `send_chat_image` had this bug untested.
+- **Date:** 2026-09-22
+
+### QA-017 — Text + image: first “Delivered” is only the text
+- **Area:** Both
+- **Severity:** P2
+- **Steps:** Send text + image; accept the first `Delivered · just now` on the chat row.
+- **Expected:** Both parts delivered.
+- **Actual:** Snapchat sends text first; the row briefly shows `Delivered`, then `Sending…` while the image uploads.
+- **Workaround:** Ignore rows containing `Sending`, pause 1.5s, and re-confirm `Delivered` before returning `ok`.
 - **Date:** 2026-09-22

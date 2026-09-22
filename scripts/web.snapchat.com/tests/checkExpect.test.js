@@ -33,7 +33,7 @@ describe("web.snapchat.com", () => {
       ).toEqual([]);
     });
 
-    it("clicked / delivered for send_chat_image", () => {
+    it("clicked / delivered for send_message", () => {
       expect(
         checkExpect(
           { ok: true, clicked: true, delivered: true },

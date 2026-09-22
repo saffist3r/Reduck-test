@@ -5,11 +5,11 @@ Local mirrors: `scripts/web.snapchat.com/scripts/<slug>/{script.js,meta.json}`
 URL: `https://www.snapchat.com/web/` (Reduck host id stays `web.snapchat.com`)
 
 Read four: `loggedIn: true`, `sideEffects: none`, `visibility: public`, never Send.  
-Write one: `send_chat_image` (`sideEffects: write`, `humanRequired: true`) — test account only.
+Write one: `send_message` (`sideEffects: write`, `humanRequired: true`) — test account only.
 
 ```
 check_session → list_chats → open_chat → list_chat_messages
-                                      ↘ send_chat_image (write)
+                                      ↘ send_message (write)
 ```
 
 ---
@@ -70,16 +70,18 @@ Optionally open by name, then scrape **visible text** bubbles. Empty pane → `c
 
 ---
 
-## `send_chat_image`
+## `send_message`
 
-`@saffist3r/web.snapchat.com/send_chat_image`
+`@saffist3r/web.snapchat.com/send_message` (replaces the archived `send_chat_image`)
 
-**Write.** Opens optional chat by name, uploads `image.png` via `input[name=uploadImages]`, then sends (Enter on composer — never the “Send this text to MyAI” shortcut). `ok` is true only when the chat’s sidebar row shows `Delivered · just now`. Stops with `ok: false` on the My AI disclaimer (never accepts it) or when no composer appears. Prefer a self-chat / test friend.
+**Write.** Opens an optional chat by name, then sends text, an image, or both. The image goes through `input[name=uploadImages]`; text is pasted into the composer; Enter sends (never the “Send this text to MyAI” shortcut). With both, Snapchat sends two messages (text, then image).
+
+`ok` is true only when the chat’s sidebar row **changes** after the send and settles on `Delivered · just now` with nothing still `Sending…`. Stops with `ok: false` on the My AI disclaimer (never accepts it) or when no composer appears. Throws if neither `text` nor `image.png` is given. Prefer a self-chat / test friend.
 
 | | |
 |--|--|
-| **Args** | `image.png` (file, required); `name` (optional); `caption` (optional) |
-| **Returns** | `ok`, `delivered`, `clicked`, `error`, `snippet`; open meta: `opened`, `notFound`, `name`, `matchedName`, `available[]` |
+| **Args** | `text` (optional); `image.png` (file, optional) — at least one; `name` (optional) |
+| **Returns** | `ok`, `delivered`, `clicked`, `sentText`, `sentImage`, `error`, `snippet`; open meta: `opened`, `notFound`, `name`, `matchedName`, `available[]` |
 | **Effects** | `sideEffects: write`, `humanRequired: true` |
 
 Fixture for local smoke: `tests/fixtures/send-test.png`.
@@ -89,4 +91,4 @@ Fixture for local smoke: `tests/fixtures/send-test.png`.
 ## Docs
 
 [SCOPE](SCOPE.md) · [QA](QA.md) · [LIMITATIONS](LIMITATIONS.md) · [BAN_RISKS](BAN_RISKS.md)  
-Benchmarks: [`../benchmarks/latest.md`](../benchmarks/latest.md) · [`../benchmarks/critical.md`](../benchmarks/critical.md)
+Benchmarks: [`../benchmarks/latest.md`](../benchmarks/latest.md) · [`../benchmarks/critical.md`](../benchmarks/critical.md) · [`../benchmarks/write.md`](../benchmarks/write.md)

@@ -6,8 +6,8 @@ Repo: `scripts/web.snapchat.com/tests/`
 |------|---------|--------|
 | `cases.json` | Smoke (5 read) | `../benchmarks/latest.md` |
 | `critical-cases.json` | Edges (14 read) | `../benchmarks/critical.md` |
-| `write-cases.json` | Write smoke (`send_chat_image`) | `../benchmarks/write.md` |
-| `fixtures/send-test.png` | Tiny PNG for image send | — |
+| `write-cases.json` | Write smoke (`send_message`: text, image + text, not found) | `../benchmarks/write.md` |
+| `fixtures/send-test.png` | Tiny PNG for the image case | — |
 | `checkExpect.test.js` | Host expect keys via ReDuckHunt | Actions Summary |
 | `run-benchmark.mjs` | Score Reduck run JSON | benchmarks + history |
 

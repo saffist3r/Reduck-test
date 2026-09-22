@@ -1,6 +1,6 @@
 # Scope — Snapchat Web
 
-Chat digest + one optional image send on `https://www.snapchat.com/web/`.
+Chat digest + one deliberate message send (text and/or image) on `https://www.snapchat.com/web/`.
 
 ## Scripts
 
@@ -10,11 +10,11 @@ Chat digest + one optional image send on `https://www.snapchat.com/web/`.
 | `list_chats` | Top N chats | none |
 | `open_chat` | Open by display name | none |
 | `list_chat_messages` | Visible text messages | none |
-| `send_chat_image` | Upload image + send in a chat | **write** |
+| `send_message` | Send text and/or an image in a chat | **write** |
 
 ```
 check_session → list_chats → open_chat → list_chat_messages
-                                      ↘ send_chat_image (write, test account)
+                                      ↘ send_message (write, test account)
 ```
 
 Full contracts: [SCRIPTS.md](SCRIPTS.md)
@@ -24,7 +24,8 @@ Full contracts: [SCRIPTS.md](SCRIPTS.md)
 - Mass DMs, friend spam, Story/Spotlight blasting, engagement farming
 - Unofficial APIs, mobile automation
 - Personal accounts (use a dedicated test account)
-- Auto-Send in the **read** scripts (only `send_chat_image` clicks Send / Enter)
+- Auto-Send in the **read** scripts (only `send_message` clicks Send / Enter)
+
 ## Notes
 
 - Reduck host id: `web.snapchat.com`

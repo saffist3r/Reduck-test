@@ -184,6 +184,11 @@ function summarizeResult(script, result, error = null) {
     case "list_chat_messages":
       if (result.notFound) return "chat notFound";
       return `count ${result.count ?? 0}` + (result.note ? `; ${result.note}` : "");
+    case "send_message": {
+      if (result.notFound) return "chat notFound";
+      const parts = [result.sentText && "text", result.sentImage && "image"].filter(Boolean);
+      return `${result.delivered ? "delivered" : "not delivered"} (${parts.join(" + ") || "nothing"})`;
+    }
     default:
       return "";
   }

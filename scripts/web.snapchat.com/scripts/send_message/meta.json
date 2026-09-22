@@ -1,29 +1,28 @@
 {
   "host": "web.snapchat.com",
-  "slug": "send_chat_image",
-  "name": "Send chat image",
-  "description": "Upload an image into a Snapchat Web chat and send it; ok only when the chat row shows Delivered. Pass name to open the chat first, or run with a chat already focused. Stops on the My AI disclaimer. Writes — use a test account.",
+  "slug": "send_message",
+  "name": "Send message",
+  "description": "Send a text message, an image, or both into a Snapchat Web chat; ok only when the chat row shows Delivered. Pass name to open the chat first, or run with a chat already focused. Stops on the My AI disclaimer. Writes — use a test account.",
   "visibility": "public",
   "loggedIn": true,
   "sideEffects": "write",
   "humanRequired": true,
   "input": {
     "type": "object",
-    "required": ["image.png"],
     "properties": {
       "name": {
         "type": "string",
         "minLength": 1,
         "description": "Optional chat display name to open first (e.g. a self-chat or test friend; avoid My AI)."
       },
-      "caption": {
+      "text": {
         "type": "string",
-        "description": "Optional caption before send."
+        "description": "Message text. Sent alone, or as the caption with image.png. Provide text and/or image.png."
       },
       "image.png": {
         "type": "string",
         "format": "file",
-        "description": "Image to send (png/jpeg/gif)."
+        "description": "Optional image to send (png/jpeg/gif). Provide text and/or image.png."
       }
     }
   },
@@ -35,6 +34,8 @@
       "error": { "type": "string" },
       "clicked": { "type": "boolean" },
       "delivered": { "type": "boolean" },
+      "sentText": { "type": "boolean" },
+      "sentImage": { "type": "boolean" },
       "available": { "type": "array", "items": { "type": "string" } },
       "snippet": { "type": "string" },
       "opened": { "type": ["boolean", "null"] },

@@ -1,6 +1,6 @@
 # web.snapchat.com
 
-Snapchat for Web scripts (`@saffist3r`) — four read + one write image send.
+Snapchat for Web scripts (`@saffist3r`) — four read + one write (`send_message`: text and/or image).
 
 Repo path: `scripts/web.snapchat.com/`
 
@@ -19,17 +19,17 @@ benchmarks/         # latest + critical + write reports
 | `list_chats` | `@saffist3r/web.snapchat.com/list_chats` | Top N chats |
 | `open_chat` | `@saffist3r/web.snapchat.com/open_chat` | Open by name |
 | `list_chat_messages` | `@saffist3r/web.snapchat.com/list_chat_messages` | Visible text |
-| `send_chat_image` | `@saffist3r/web.snapchat.com/send_chat_image` | Upload + send image (**write**) |
+| `send_message` | `@saffist3r/web.snapchat.com/send_message` | Send text and/or image (**write**) |
 
 Chain: `check_session` → `list_chats` → `open_chat` → `list_chat_messages`  
-Write: `send_chat_image` (fixture `tests/fixtures/send-test.png`)
+Write: `send_message` (fixture `tests/fixtures/send-test.png`)
 
 Contracts: [docs/SCRIPTS.md](docs/SCRIPTS.md)
 
 ## Safety
 
 - Test account only · low rate · read scripts never Send
-- `send_chat_image` is deliberate write — prefer a self-chat; avoid blasting My AI / friends
+- `send_message` is deliberate write — prefer a self-chat; avoid blasting My AI / friends
 - Close other Snapchat Web tabs before runs
 
 [SCOPE](docs/SCOPE.md) · [QA](docs/QA.md) · [LIMITATIONS](docs/LIMITATIONS.md) · [BAN_RISKS](docs/BAN_RISKS.md) · [SCRIPTS](docs/SCRIPTS.md)
@@ -40,7 +40,9 @@ Contracts: [docs/SCRIPTS.md](docs/SCRIPTS.md)
 |-------|--------|-------------|--------|
 | Smoke | 5/5 | 33.6s | [benchmarks/latest.md](benchmarks/latest.md) |
 | Critical | 14/14 | 75.5s | [benchmarks/critical.md](benchmarks/critical.md) |
-| Write (`send_chat_image`) | 2/2 | 15.8s | [benchmarks/write.md](benchmarks/write.md) |
+| Write (`send_message`) | 3/3 | 28.9s | [benchmarks/write.md](benchmarks/write.md) |
+
+`send_message` was also checked once by hand on a group chat (`TEST REDUCK`, text only, delivered); it is not a benchmark case because it messages real people.
 
 Script time = sum of Reduck step-trace durations (excludes browser startup). Each report lists the Reduck run id per case.
 
@@ -66,7 +68,7 @@ node scripts/web.snapchat.com/tests/run-benchmark.mjs \
   --out critical
 ```
 
-Write (`send_chat_image`, test account):
+Write (`send_message`, test account):
 
 ```bash
 node scripts/web.snapchat.com/tests/run-benchmark.mjs \
