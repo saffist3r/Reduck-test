@@ -1,0 +1,16 @@
+{
+  "name": "reduckhunt",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Local + CI test framework for Reduck host scripts (no live E2E)",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:report": "vitest run --reporter=default --reporter=html --reporter=junit --outputFile.html=test-results/index.html --outputFile.junit=test-results/junit.xml"
+  },
+  "devDependencies": {
+    "@vitest/ui": "^3.2.4",
+    "vitest": "^3.2.4"
+  }
+}

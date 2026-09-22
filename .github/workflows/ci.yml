@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  reduckhunt:
+    name: ReDuckHunt (script tests)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ReDuckHunt
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: ReDuckHunt/package-lock.json
+      - run: npm ci
+      - run: npm test
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reduckhunt-test-results
+          path: ReDuckHunt/test-results/
+          if-no-files-found: ignore

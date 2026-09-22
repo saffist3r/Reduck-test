@@ -1,5 +1,7 @@
 # Snapchat Web tests
 
+Offline CI (meta / syntax / cases shape): see [`ReDuckHunt/`](../../ReDuckHunt/) — `npm test` from repo root. This folder is the **live** Reduck suite.
+
 ## Suites
 
 | File | Purpose | Report |
