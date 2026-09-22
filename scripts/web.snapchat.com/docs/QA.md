@@ -109,7 +109,7 @@ Safety: test account, low rate, read-first.
 - **Steps:** Click chat `listitem` by index (camera icon side) or open My AI while disclaimer modal is up.
 - **Expected:** Composer + `input[name=uploadImages]`.
 - **Actual:** Camera landing (“Click the Camera…”) or My AI modal → no file input → timeout.
-- **Workaround:** Open like `open_chat` (`filter({ hasText })`); dismiss My AI modal; prefer self-chat for write smoke.
+- **Workaround:** Open like `open_chat` (`filter({ hasText })`); on the My AI disclaimer return `ok: false` (never auto-accept terms); prefer self-chat for write smoke.
 - **Date:** 2026-09-22
 
 ### QA-014 — Sidebar “Send this text to MyAI” steals Send click

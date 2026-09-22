@@ -28,6 +28,10 @@ export function checkExpect(expect, result, error = null) {
     failures.push("expected a result object (ok:true)");
   }
 
+  if (expect.ok === true && result?.ok === false) {
+    failures.push(`ok: result.ok is false${result.error ? ` (${result.error})` : ""}`);
+  }
+
   if ("notFound" in expect) {
     if (!!result?.notFound !== !!expect.notFound) {
       failures.push(`notFound: got ${!!result?.notFound}, want ${!!expect.notFound}`);
@@ -54,9 +58,9 @@ export function checkExpect(expect, result, error = null) {
     }
   }
 
-  if ("clicked" in expect) {
-    if (!!result?.clicked !== !!expect.clicked) {
-      failures.push(`clicked: got ${!!result?.clicked}, want ${!!expect.clicked}`);
+  for (const key of ["clicked", "delivered"]) {
+    if (key in expect && !!result?.[key] !== !!expect[key]) {
+      failures.push(`${key}: got ${!!result?.[key]}, want ${!!expect[key]}`);
     }
   }
 

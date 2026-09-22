@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-09-22T17:12:35.107Z",
+  "ranAt": "2026-09-22T17:22:50.578Z",
   "suite": "/Users/saffist3r/Projects/Reduck-Test/scripts/web.snapchat.com/tests/write-cases.json",
   "suiteName": "write",
   "host": "web.snapchat.com",
@@ -26,7 +26,7 @@
       "notes": "",
       "reason": "ok",
       "durationMs": 0,
-      "runId": "live-send-self",
+      "runId": "67d85362-9e23-4441-b162-45a68b1ff06e",
       "expectFailures": []
     },
     {
@@ -37,7 +37,7 @@
       "notes": "",
       "reason": "ok",
       "durationMs": 0,
-      "runId": "live-send-notfound",
+      "runId": "04d554fc-9cd1-431c-99fa-b65a5d510bea",
       "expectFailures": []
     }
   ]

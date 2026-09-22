@@ -12,6 +12,7 @@
       "expect": {
         "ok": true,
         "clicked": true,
+        "delivered": true,
         "opened": true,
         "notFound": false
       }
@@ -23,9 +24,10 @@
       "files": { "image.png": "tests/fixtures/send-test.png" },
       "tag": "write",
       "expect": {
-        "ok": true,
         "opened": false,
-        "notFound": true
+        "notFound": true,
+        "delivered": false,
+        "hasAvailable": true
       }
     }
   ]

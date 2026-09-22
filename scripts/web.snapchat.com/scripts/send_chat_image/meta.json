@@ -2,7 +2,7 @@
   "host": "web.snapchat.com",
   "slug": "send_chat_image",
   "name": "Send chat image",
-  "description": "Upload an image into a Snapchat Web chat and send it. Pass name to open the chat first, or run with a chat already focused. Writes — use a test account.",
+  "description": "Upload an image into a Snapchat Web chat and send it; ok only when the chat row shows Delivered. Pass name to open the chat first, or run with a chat already focused. Stops on the My AI disclaimer. Writes — use a test account.",
   "visibility": "public",
   "loggedIn": true,
   "sideEffects": "write",
@@ -14,7 +14,7 @@
       "name": {
         "type": "string",
         "minLength": 1,
-        "description": "Optional chat display name to open first (e.g. My AI)."
+        "description": "Optional chat display name to open first (e.g. a self-chat or test friend; avoid My AI)."
       },
       "caption": {
         "type": "string",
@@ -34,6 +34,8 @@
       "ok": { "type": "boolean" },
       "error": { "type": "string" },
       "clicked": { "type": "boolean" },
+      "delivered": { "type": "boolean" },
+      "available": { "type": "array", "items": { "type": "string" } },
       "snippet": { "type": "string" },
       "opened": { "type": ["boolean", "null"] },
       "notFound": { "type": ["boolean", "null"] },

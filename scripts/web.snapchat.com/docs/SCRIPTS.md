@@ -74,12 +74,12 @@ Optionally open by name, then scrape **visible text** bubbles. Empty pane → `c
 
 `@saffist3r/web.snapchat.com/send_chat_image`
 
-**Write.** Opens optional chat by name, uploads `image.png` via `input[name=uploadImages]`, then sends (Enter on composer — never the “Send this text to MyAI” shortcut). Prefer a self-chat / test friend; My AI may show a disclaimer modal.
+**Write.** Opens optional chat by name, uploads `image.png` via `input[name=uploadImages]`, then sends (Enter on composer — never the “Send this text to MyAI” shortcut). `ok` is true only when the chat’s sidebar row shows `Delivered · just now`. Stops with `ok: false` on the My AI disclaimer (never accepts it) or when no composer appears. Prefer a self-chat / test friend.
 
 | | |
 |--|--|
 | **Args** | `image.png` (file, required); `name` (optional); `caption` (optional) |
-| **Returns** | `ok`, `clicked`, `snippet`; open meta: `opened`, `notFound`, `name`, `matchedName` |
+| **Returns** | `ok`, `delivered`, `clicked`, `error`, `snippet`; open meta: `opened`, `notFound`, `name`, `matchedName`, `available[]` |
 | **Effects** | `sideEffects: write`, `humanRequired: true` |
 
 Fixture for local smoke: `tests/fixtures/send-test.png`.

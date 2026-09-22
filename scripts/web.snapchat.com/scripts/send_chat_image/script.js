@@ -19,37 +19,11 @@ async function dismissTooManyTabs() {
   }
 }
 
-async function dismissMyAiModal() {
-  for (let i = 0; i < 3; i++) {
-    const hit = await page.evaluate(() => {
-      const text = document.body?.innerText || '';
-      if (!/Here's what you need to know|before you use My AI/i.test(text)) {
-        return false;
-      }
-      const dialog = document.querySelector('[role="dialog"]');
-      const scope = dialog || document.body;
-      const btns = [...scope.querySelectorAll('button, [role="button"]')];
-      const prefer = btns.find((b) =>
-        /got it|continue|accept|agree|i understand|ok\b/i.test(
-          `${b.innerText || ''} ${b.getAttribute('aria-label') || ''}`,
-        ),
-      );
-      if (prefer) {
-        prefer.click();
-        return 'prefer';
-      }
-      if (dialog) {
-        const dbtns = [...dialog.querySelectorAll('button, [role="button"]')];
-        if (dbtns.length) {
-          dbtns[dbtns.length - 1].click();
-          return 'dialog-last';
-        }
-      }
-      return false;
-    });
-    if (!hit) return;
-    await page.waitForTimeout(1200);
-  }
+// The My AI disclaimer is a terms prompt: never click through it on the user's behalf.
+async function hasMyAiDisclaimer() {
+  return page.evaluate(() =>
+    /Here's what you need to know|before you use My AI/i.test(document.body?.innerText || ''),
+  );
 }
 
 async function openChatByName(want) {
@@ -95,6 +69,7 @@ async function openChatByName(want) {
   if (!match.found) {
     return {
       ok: false,
+      delivered: false,
       opened: false,
       notFound: true,
       name: want,
@@ -123,7 +98,6 @@ async function openChatByName(want) {
 
   await page.waitForTimeout(3000);
   await dismissTooManyTabs();
-  await dismissMyAiModal();
   await page.waitForTimeout(1000);
 
   return {
@@ -145,12 +119,33 @@ if (chatName) {
   const opened = await openChatByName(chatName);
   if (!opened.ok) return opened;
   openMeta = opened;
-} else {
-  await dismissMyAiModal();
-  await page.waitForTimeout(500);
 }
 
-await builtins.waitFor('input[type=file][name=uploadImages]', 'attached');
+if (await hasMyAiDisclaimer()) {
+  return {
+    ...openMeta,
+    ok: false,
+    clicked: false,
+    delivered: false,
+    error: 'my_ai_disclaimer: accept it manually in Snapchat first, or use another chat',
+  };
+}
+
+const composerReady = await page
+  .locator('input[type=file][name=uploadImages]')
+  .waitFor({ state: 'attached', timeout: 15000 })
+  .then(() => true)
+  .catch(() => false);
+if (!composerReady) {
+  return {
+    ...openMeta,
+    ok: false,
+    clicked: false,
+    delivered: false,
+    error: 'composer not found (no uploadImages input; chat may show the camera pane)',
+  };
+}
+
 await builtins.uploadFile('input[type=file][name=uploadImages]', fileKey);
 await page.waitForTimeout(2000);
 
@@ -194,13 +189,38 @@ if (!clicked) {
   }
 }
 
-await page.waitForTimeout(3000);
+// Delivery = the chat's sidebar row flips to "Delivered/Sent · just now|Ns".
+const delivered = clicked
+  ? await page
+      .waitForFunction(
+        (label) => {
+          const rows = [...document.querySelectorAll('[role="listitem"]')];
+          const pick = label
+            ? rows.filter(
+                (r) =>
+                  ((r.innerText || '').trim().split(/\n+/)[0] || '').trim().toLowerCase() ===
+                  String(label).toLowerCase(),
+              )
+            : rows;
+          return pick.some((r) => {
+            const t = r.innerText || '';
+            return /\b(Delivered|Sent)\b/i.test(t) && /just now|\b\d{1,2}s\b/i.test(t);
+          });
+        },
+        openMeta.matchedName,
+        { timeout: 15000 },
+      )
+      .then(() => true)
+      .catch(() => false)
+  : false;
+
 const snippet = await page.evaluate(() => (document.body.innerText || '').slice(-700));
-const deliveredHint = /Delivered|Opened|just now|\d+s/i.test(snippet);
 
 return {
-  ok: clicked || deliveredHint,
+  ok: delivered,
   clicked,
+  delivered,
+  ...(delivered ? {} : { error: clicked ? 'send not confirmed (no Delivered row)' : 'send control not found' }),
   snippet,
   opened: openMeta.opened,
   notFound: openMeta.notFound,
