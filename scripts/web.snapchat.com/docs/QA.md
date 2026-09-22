@@ -1,9 +1,8 @@
-# QA report — Reduck × Snapchat for Web
+# QA — Snapchat Web
 
-Living log. Findings use the template in `.cursor/rules/qa-report.mdc`.
+Log of Reduck × Snapchat friction. Template: `.cursor/rules/qa-report.mdc`.
 
-## Account risk acknowledgement
-Automating Snapchat risks account flags or bans. Work uses a **dedicated test account** only, low request rate, and read-first scripts. Personal accounts are out of scope.
+**Safety:** test account, low rate, read-first. Personal accounts out of scope.
 
 ## Probe verdict (2026-09-21)
 **GO** — logged-in chat list is readable under Reduck after dismissing the multi-tab modal. Canonical URL redirects to `https://www.snapchat.com/web/`. Chat rows are `[role="listitem"]` (observed: My AI, Team Snapchat). Opening a chat is fragile when another Snapchat Web tab is open.

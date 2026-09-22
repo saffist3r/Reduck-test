@@ -1,6 +1,6 @@
 /**
- * Unified expect matcher for Reduck case payloads (Snapchat + Anybuddy).
- * Pure function — no I/O. Used by unit tests; live benchmarks may import later.
+ * Shared expect matcher for Reduck case payloads.
+ * Pure function — no I/O. Hosts import this from their tests / benchmarks.
  *
  * @param {object} expect
  * @param {object|null} result

@@ -1,43 +1,18 @@
-# Anybuddy script tests
+# Anybuddy tests
 
-Live Reduck suite. Static checks: [`tools/ReDuckHunt`](../../../tools/ReDuckHunt) (`npm test`).
-
-Test matrix: `cases.json`. Evaluator: `run-benchmark.mjs`.
-
-## Cases
-
-| id | script | expectation |
-|----|--------|-------------|
-| locations-lyon | search_locations | ≥1 candidate |
-| locations-paris | search_locations | ≥1 candidate |
-| clubs-lyon-tennis | search_clubs | ≥1 club |
-| clubs-paris-padel | search_clubs | ≥1 club |
-| club-racing | get_club | Racing Club profile |
-| matches-paris-tennis-filled | list_public_matches | ≥1 match |
-| matches-paris-badminton-empty | list_public_matches | count 0, notFound false |
-| matches-lyon-padel | list_public_matches | ok |
-| matches-cergy-404 | list_public_matches | notFound true |
-
-## How to run
-
-Ask the agent: **“run the Anybuddy benchmark suite”**.
-
-It will:
-
-1. Batch `run_script` for every case in `cases.json`
-2. Write raw payloads to `tests/.last-runs.json`
-3. Run:
+| File | Purpose |
+|------|---------|
+| `cases.json` | Live matrix |
+| `checkExpect.test.js` | Host expect keys (ReDuckHunt) |
+| `run-benchmark.mjs` | Evaluate run payloads |
 
 ```bash
-node scripts/anybuddyapp.com/tests/run-benchmark.mjs --from-runs scripts/anybuddyapp.com/tests/.last-runs.json
+node scripts/anybuddyapp.com/tests/run-benchmark.mjs \
+  --from-runs scripts/anybuddyapp.com/tests/.last-runs.json
 ```
 
-Outputs:
+→ `benchmarks/latest.{json,md}` + `benchmarks/history/`.
 
-- `benchmarks/latest.json` — machine-readable report
-- `benchmarks/latest.md` — human-readable report
-- `benchmarks/history/<timestamp>.{json,md}` — archived copy
+Static: `npm test` from repo root.
 
-## Regression covered
-
-`list_public_matches` previously timed out when a city had **no open matches** or the matches URL **404’d**. The suite asserts both now succeed quickly with structured empty/`notFound` results.
+`list_public_matches` covers empty matches and 404 city without hanging.

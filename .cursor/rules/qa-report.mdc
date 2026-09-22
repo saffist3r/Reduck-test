@@ -1,14 +1,12 @@
 ---
-description: How to log QA findings for the Snapchat Web host
+description: QA finding format for Snapchat Web
 globs: scripts/web.snapchat.com/docs/QA.md,scripts/web.snapchat.com/benchmarks/**
 alwaysApply: false
 ---
 
-# QA report format
+# QA findings
 
-Append findings to `scripts/web.snapchat.com/docs/QA.md` as you hit them. Each finding must be specific and reproducible.
-
-## Template
+Append to `scripts/web.snapchat.com/docs/QA.md`:
 
 ```md
 ### QA-NNN — short title
@@ -20,8 +18,4 @@ Append findings to `scripts/web.snapchat.com/docs/QA.md` as you hit them. Each f
 - **Workaround:** …
 - **Date:** YYYY-MM-DD
 ```
-
-Also note what **worked well** (agents, traces, promote flow, etc.) — balanced reports read senior.
-
-Acknowledge Snapchat account-ban risk explicitly in the QA summary.
 ---

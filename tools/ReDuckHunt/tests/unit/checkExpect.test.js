@@ -21,7 +21,10 @@ describe("checkExpect", () => {
 
   it("checks notFound / opened", () => {
     expect(
-      checkExpect({ notFound: true, opened: false }, { notFound: true, opened: false }),
+      checkExpect(
+        { notFound: true, opened: false },
+        { notFound: true, opened: false },
+      ),
     ).toEqual([]);
     expect(checkExpect({ notFound: true }, { notFound: false })[0]).toMatch(
       /notFound/,
@@ -47,33 +50,12 @@ describe("checkExpect", () => {
   it("checks urlIncludes and hasKeys", () => {
     expect(
       checkExpect(
-        { urlIncludes: "snapchat.com/web", hasKeys: ["loggedIn", "url"] },
-        { loggedIn: true, url: "https://www.snapchat.com/web/" },
+        { urlIncludes: "example.com", hasKeys: ["loggedIn", "url"] },
+        { loggedIn: true, url: "https://example.com/app" },
       ),
     ).toEqual([]);
     expect(
       checkExpect({ hasKeys: ["title"] }, { loggedIn: true })[0],
     ).toMatch(/missing "title"/);
-  });
-
-  it("checks Anybuddy minCandidates / firstSlugIncludes", () => {
-    expect(
-      checkExpect(
-        { minCandidates: 1, firstSlugIncludes: "lyon" },
-        { candidates: [{ slug: "lyon-69000-fr", name: "Lyon" }] },
-      ),
-    ).toEqual([]);
-    expect(
-      checkExpect({ minCandidates: 2 }, { candidates: [{ slug: "x" }] })[0],
-    ).toMatch(/minCandidates/);
-  });
-
-  it("checks minClubs and clubNameIncludes", () => {
-    expect(
-      checkExpect(
-        { minClubs: 1, clubNameIncludes: "Racing" },
-        { clubs: [{}], club: { name: "Racing Club" } },
-      ),
-    ).toEqual([]);
   });
 });

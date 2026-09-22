@@ -1,16 +1,15 @@
 # ReDuckHunt
 
-Vitest checks for whatever lives under `scripts/<host>/`.
+Vitest runner for this repo.
 
 ```bash
-npm install
-npm test
+npm install && npm test
 ```
 
-From repo root: `npm test`.
+Includes:
+- `tools/ReDuckHunt/tests/` — discovery + shared matcher
+- `scripts/<host>/tests/**/*.test.js` — per-host tests
 
-Auto-discovers:
-- packs: `scripts/<host>/<slug>/` or `scripts/<host>/scripts/<slug>/` (`script.js` + `meta.json`)
-- cases: `scripts/<host>/tests/*.json` with a `cases` array
+Discovers packs under `scripts/<host>/` (flat or nested `scripts/`) and `tests/*.json` case suites.
 
-On GitHub Actions the report is the job **Summary**. Locally: `test-results/report.md`.
+Report: Actions job **Summary**, or local `test-results/report.md`.

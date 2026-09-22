@@ -107,9 +107,9 @@ function collect(tasks, path, fileName, visit) {
   }
 }
 
-/** Map describe/it path → { group: host/slug|host|framework, check } */
+/** Map describe/it path → { group, check } */
 function classify(path, name, fileName) {
-  // scripts > host > slug > check
+  // scripts > host > slug > check (framework pack discovery)
   if (path[0] === "scripts" && path.length >= 4) {
     return { group: `${path[1]}/${path[2]}`, check: name || path[3] };
   }
@@ -117,8 +117,15 @@ function classify(path, name, fileName) {
   if (path[0] === "cases" && path.length >= 3) {
     return { group: `${path[1]}/cases`, check: name || path[2] };
   }
-  // checkExpect unit suite
-  if (fileName.includes("checkExpect") || path[0] === "checkExpect") {
+  // host folder tests: describe(host) > describe(suite) > it
+  if (path.length >= 2 && path[0].includes(".")) {
+    return {
+      group: `${path[0]}/${path[1]}`,
+      check: name || path.slice(2).join(" › "),
+    };
+  }
+  // framework checkExpect
+  if (path[0] === "checkExpect") {
     return { group: "ReDuckHunt/checkExpect", check: name };
   }
   return {

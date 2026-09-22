@@ -1,46 +1,22 @@
 # Snapchat Web tests
 
-Live Reduck suite. Static checks: [`tools/ReDuckHunt`](../../../tools/ReDuckHunt) (`npm test`).
-
-## Suites
-
 | File | Purpose | Report |
 |------|---------|--------|
-| `cases.json` | Smoke (5 cases) | `benchmarks/latest.md` |
-| `critical-cases.json` | Capability + edges (14 cases) | `benchmarks/critical.md` |
+| `cases.json` | Smoke | `benchmarks/latest.md` |
+| `critical-cases.json` | Edges | `benchmarks/critical.md` |
+| `checkExpect.test.js` | Host expect keys (ReDuckHunt) | Actions Summary |
 
-Evaluator: `run-benchmark.mjs`
-
-## Critical suite — what it stresses
-
-| Tag | Capabilities |
-|-----|----------------|
-| `session` | loggedIn, url shape, tooManyTabs false, required keys |
-| `list` | min/max count vs `limit`, My AI present, row shape |
-| `open` | exact / case-insensitive / partial match, notFound + available[], empty name error |
-| `messages` | min text content, limit cap, notFound empty |
-
-## How to run (IMPORTANT)
-
-**Sequential only** — do not parallel-blast. See [docs/BAN_RISKS.md](../docs/BAN_RISKS.md).
-
-1. Close other Snapchat Web tabs.
-2. Ask the agent: **“run the Snapchat critical suite”** (delays between `run_script` calls).
-3. Evaluate:
+Evaluator: `run-benchmark.mjs`. Run live suites **sequentially** (see [BAN_RISKS](../docs/BAN_RISKS.md)).
 
 ```bash
+# after Reduck runs → .last-runs.json / .critical-runs.json
+node scripts/web.snapchat.com/tests/run-benchmark.mjs \
+  --from-runs scripts/web.snapchat.com/tests/.last-runs.json
+
 node scripts/web.snapchat.com/tests/run-benchmark.mjs \
   --from-runs scripts/web.snapchat.com/tests/.critical-runs.json \
   --cases scripts/web.snapchat.com/tests/critical-cases.json \
   --out critical
 ```
 
-Smoke:
-
-```bash
-node scripts/web.snapchat.com/tests/run-benchmark.mjs \
-  --from-runs scripts/web.snapchat.com/tests/.last-runs.json
-```
-
-## Safety
-Dedicated test account only. Keep `limit` small. Stop if Snapchat challenges the account.
+Static: `npm test` from repo root.

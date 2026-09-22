@@ -1,31 +1,17 @@
 ---
-description: Quality bar for Reduck scripts under scripts/web.snapchat.com
+description: Quality bar for scripts under scripts/web.snapchat.com
 globs: scripts/web.snapchat.com/**
 alwaysApply: false
 ---
 
-# Reduck script quality
+# Script quality
 
-Local mirrors live in `scripts/web.snapchat.com/scripts/<slug>/{script.js,meta.json}`. Reduck address stays `@handle/web.snapchat.com/<slug>` (not under `scripts/` on the server).
+Mirrors: `scripts/web.snapchat.com/scripts/<slug>/{script.js,meta.json}`  
+Address: `@handle/web.snapchat.com/<slug>`
 
-## Contracts
-- Validate required `args` up front; throw clear errors.
-- Return a stable object shape every time (counts, flags, arrays — never naked `undefined`).
-- Set `loggedIn` and `sideEffects` honestly in `meta.json`.
-- One script = one job. Chain via caller args; do not mega-script.
-
-## Resilience (Anybuddy lessons)
-- Prefer finite timeouts. Never wait forever for optional UI.
-- Empty lists and not-found → **structured success** (`count: 0`, `opened: false` / `notFound: true`), not a 45s timeout.
-- Logged-out → clear `{ loggedIn: false, ... }` or an explicit error — document the choice in QA.
-- Insert short delays between open-chat and scrape to stay human-paced.
-
-## Selectors
-- Prefer role/text locators when stable; fall back carefully for Snapchat’s SPA.
-- Virtualized lists: only scrape visible rows up to `limit`; document the cap.
-
-## Tests
-- Every script needs cases in `scripts/web.snapchat.com/tests/cases.json` (happy + empty/not-found).
-- After suite runs, write `benchmarks/latest.md` via `tests/run-benchmark.mjs`.
-- Offline CI: `tools/ReDuckHunt` (`npm test` from repo root).
+- Validate args; stable return shapes; honest `loggedIn` / `sideEffects`
+- One job per script; finite timeouts; empty/not-found as structured success
+- Cap list scrapes; short delays between open and scrape
+- Cases in `tests/cases.json`; live eval via `run-benchmark.mjs`
+- Static checks: `npm test` (ReDuckHunt)
 ---
