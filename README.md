@@ -1,5 +1,10 @@
 # Reduck-test
 
-Reduck take-home: Snapchat for Web morning chat digest.
+Reduck browser-automation projects (handle `@saffist3r`).
 
-See [`web.snapchat.com/`](web.snapchat.com/) for scripts, docs, tests, and benchmarks.
+| Host folder | What it is |
+|-------------|------------|
+| [`anybuddyapp.com/`](anybuddyapp.com/) | Court booking search — locations, clubs, matches |
+| [`web.snapchat.com/`](web.snapchat.com/) | Snapchat for Web — morning chat digest (take-home) |
+
+Each host has its own `README.md`, scripts, tests, and benchmarks.
