@@ -1,0 +1,60 @@
+{
+  "host": "anybuddyapp.com",
+  "slug": "list_public_matches",
+  "name": "List public matches",
+  "description": "List public open matches for a sport near a city. Returns match id/url, when, venue, address, player fill, and price. location_slug from search_locations.",
+  "visibility": "public",
+  "loggedIn": false,
+  "sideEffects": "none",
+  "humanRequired": false,
+  "input": {
+    "type": "object",
+    "required": ["location_slug"],
+    "properties": {
+      "sport": {
+        "enum": ["tennis", "padel", "badminton", "squash", "pickleball", "table-tennis"],
+        "type": "string",
+        "default": "tennis",
+        "description": "Sport path segment: tennis | padel | badminton | squash | pickleball | table-tennis."
+      },
+      "location_slug": {
+        "type": "string",
+        "minLength": 1,
+        "description": "City slug from search_locations, e.g. paris-75000-fr."
+      }
+    }
+  },
+  "output": {
+    "type": "object",
+    "required": ["sport", "location_slug", "count", "matches", "url", "notFound"],
+    "properties": {
+      "url": { "type": "string" },
+      "count": { "type": "integer" },
+      "sport": { "type": "string" },
+      "notFound": {
+        "type": "boolean",
+        "description": "True when the sport+city matches URL does not exist (HTTP/soft 404)."
+      },
+      "matches": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["id", "url"],
+          "properties": {
+            "id": { "type": "string" },
+            "url": { "type": "string" },
+            "when": { "type": ["string", "null"] },
+            "venue": { "type": ["string", "null"] },
+            "address": { "type": ["string", "null"] },
+            "priceEur": { "type": ["number", "null"] },
+            "playersTotal": { "type": ["integer", "null"] },
+            "playersFilled": { "type": ["integer", "null"] }
+          }
+        }
+      },
+      "openSpots": { "type": ["integer", "null"] },
+      "openMatches": { "type": ["integer", "null"] },
+      "location_slug": { "type": "string" }
+    }
+  }
+}

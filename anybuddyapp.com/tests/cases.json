@@ -1,0 +1,114 @@
+{
+  "host": "anybuddyapp.com",
+  "cases": [
+    {
+      "id": "locations-lyon",
+      "script": "search_locations",
+      "args": { "query": "Lyon" },
+      "expect": {
+        "ok": true,
+        "minCandidates": 1,
+        "firstSlugIncludes": "lyon"
+      }
+    },
+    {
+      "id": "locations-paris",
+      "script": "search_locations",
+      "args": { "query": "Paris" },
+      "expect": {
+        "ok": true,
+        "minCandidates": 1
+      }
+    },
+    {
+      "id": "clubs-lyon-tennis",
+      "script": "search_clubs",
+      "args": {
+        "sport": "tennis",
+        "location_slug": "lyon-69000-fr",
+        "date": "2026-09-21",
+        "page": 1
+      },
+      "expect": {
+        "ok": true,
+        "minClubs": 1
+      }
+    },
+    {
+      "id": "clubs-paris-padel",
+      "script": "search_clubs",
+      "args": {
+        "sport": "padel",
+        "location_slug": "paris-75000-fr",
+        "page": 1
+      },
+      "expect": {
+        "ok": true,
+        "minClubs": 1
+      }
+    },
+    {
+      "id": "club-racing",
+      "script": "get_club",
+      "args": {
+        "club_slug": "racing-club-de-france-paris",
+        "sport": "tennis"
+      },
+      "expect": {
+        "ok": true,
+        "clubNameIncludes": "Racing"
+      }
+    },
+    {
+      "id": "matches-paris-tennis-filled",
+      "script": "list_public_matches",
+      "args": {
+        "sport": "tennis",
+        "location_slug": "paris-75000-fr"
+      },
+      "expect": {
+        "ok": true,
+        "notFound": false,
+        "minCount": 1
+      }
+    },
+    {
+      "id": "matches-paris-badminton-empty",
+      "script": "list_public_matches",
+      "args": {
+        "sport": "badminton",
+        "location_slug": "paris-75000-fr"
+      },
+      "expect": {
+        "ok": true,
+        "notFound": false,
+        "count": 0
+      }
+    },
+    {
+      "id": "matches-lyon-padel",
+      "script": "list_public_matches",
+      "args": {
+        "sport": "padel",
+        "location_slug": "lyon-69000-fr"
+      },
+      "expect": {
+        "ok": true,
+        "notFound": false
+      }
+    },
+    {
+      "id": "matches-cergy-404",
+      "script": "list_public_matches",
+      "args": {
+        "sport": "tennis",
+        "location_slug": "cergy-95000-fr"
+      },
+      "expect": {
+        "ok": true,
+        "notFound": true,
+        "count": 0
+      }
+    }
+  ]
+}

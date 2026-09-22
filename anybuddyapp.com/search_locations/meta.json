@@ -1,0 +1,58 @@
+{
+  "host": "anybuddyapp.com",
+  "slug": "search_locations",
+  "name": "Search locations",
+  "description": "Resolve a free-text city or club query to Anybuddy location candidates (slug, coords, type). Use the returned city slug with search_clubs / list_public_matches.",
+  "visibility": "private",
+  "loggedIn": false,
+  "sideEffects": "none",
+  "humanRequired": false,
+  "input": {
+    "type": "object",
+    "required": ["query"],
+    "properties": {
+      "limit": {
+        "type": "integer",
+        "default": 10,
+        "maximum": 20,
+        "minimum": 1,
+        "description": "Max candidates to return (Anybuddy default 10)."
+      },
+      "query": {
+        "type": "string",
+        "minLength": 1,
+        "description": "City or club name as typed in Anybuddy's location box (e.g. \"Lyon\", \"Paris\", \"Racing Club\")."
+      }
+    }
+  },
+  "output": {
+    "type": "object",
+    "required": ["query", "candidates"],
+    "properties": {
+      "query": { "type": "string" },
+      "candidates": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["name", "type", "slug"],
+          "properties": {
+            "lat": { "type": ["number", "null"] },
+            "lon": { "type": ["number", "null"] },
+            "city": { "type": ["string", "null"] },
+            "name": { "type": "string" },
+            "slug": {
+              "type": "string",
+              "description": "Location slug for search URLs, e.g. lyon-69000-fr or club/…"
+            },
+            "type": {
+              "type": "string",
+              "description": "city | sport_club | …"
+            },
+            "centerId": { "type": ["string", "null"] },
+            "countryCode": { "type": ["string", "null"] }
+          }
+        }
+      }
+    }
+  }
+}

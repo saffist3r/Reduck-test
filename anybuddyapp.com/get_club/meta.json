@@ -1,0 +1,60 @@
+{
+  "host": "anybuddyapp.com",
+  "slug": "get_club",
+  "name": "Get club",
+  "description": "Fetch a club's public Anybuddy profile: name, address, coords, rating, price range, description, and court count. Pass club_slug from search_clubs (e.g. racing-club-de-france-paris).",
+  "visibility": "private",
+  "loggedIn": false,
+  "sideEffects": "none",
+  "humanRequired": false,
+  "input": {
+    "type": "object",
+    "required": ["club_slug"],
+    "properties": {
+      "sport": {
+        "enum": ["tennis", "padel", "badminton", "squash", "pickleball", "table-tennis"],
+        "type": "string",
+        "description": "Optional sport page to open (tennis | padel | …). Defaults to the club root page."
+      },
+      "club_slug": {
+        "type": "string",
+        "minLength": 1,
+        "description": "Club slug from search_clubs, e.g. racing-club-de-france-paris."
+      }
+    }
+  },
+  "output": {
+    "type": "object",
+    "required": ["club", "url"],
+    "properties": {
+      "url": { "type": "string" },
+      "club": {
+        "type": "object",
+        "required": ["url"],
+        "properties": {
+          "lat": { "type": ["number", "null"] },
+          "lon": { "type": ["number", "null"] },
+          "url": { "type": "string" },
+          "city": { "type": ["string", "null"] },
+          "logo": { "type": ["string", "null"] },
+          "name": { "type": ["string", "null"] },
+          "slug": { "type": ["string", "null"] },
+          "image": { "type": ["string", "null"] },
+          "rating": { "type": ["number", "null"] },
+          "sports": { "type": "array", "items": { "type": "string" } },
+          "address": { "type": ["string", "null"] },
+          "country": { "type": ["string", "null"] },
+          "currency": { "type": ["string", "null"] },
+          "courtCount": { "type": ["integer", "null"] },
+          "postalCode": { "type": ["string", "null"] },
+          "priceRange": { "type": ["string", "null"] },
+          "description": { "type": ["string", "null"] },
+          "lowPriceEur": { "type": ["number", "null"] },
+          "reviewCount": { "type": ["number", "null"] },
+          "highPriceEur": { "type": ["number", "null"] }
+        }
+      },
+      "sport": { "type": ["string", "null"] }
+    }
+  }
+}
