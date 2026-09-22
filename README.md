@@ -15,4 +15,4 @@ npm install --prefix tools/ReDuckHunt
 npm test
 ```
 
-CI runs the same thing. Report: `tools/ReDuckHunt/test-results/report.md`.
+CI: open the workflow run → **Summary** (report is rendered there).
