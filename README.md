@@ -12,5 +12,3 @@ npm test
 ```
 
 CI report: Actions **Summary**.
-
-Snapchat docs: [`scripts/web.snapchat.com/docs/SCRIPTS.md`](scripts/web.snapchat.com/docs/SCRIPTS.md)
