@@ -1,6 +1,6 @@
 {
   "ranAt": "2026-09-21T20:40:28.605Z",
-  "suite": "web.snapchat.com/tests/cases.json",
+  "suite": "scripts/web.snapchat.com/tests/cases.json",
   "host": "web.snapchat.com",
   "summary": {
     "total": 5,

@@ -1,8 +1,9 @@
 # Reduck-test
 
 ```
-scripts/<host>/     # Reduck scripts per site
-tools/ReDuckHunt/   # Vitest runner (auto-discovers scripts/)
+scripts/anybuddyapp.com/    # court booking
+scripts/web.snapchat.com/   # Snapchat Web read scripts
+tools/ReDuckHunt/           # Vitest (discovers scripts/<host>/)
 ```
 
 ```bash
@@ -10,4 +11,6 @@ npm install --prefix tools/ReDuckHunt
 npm test
 ```
 
-CI posts the report on the Actions **Summary**.
+CI report: Actions **Summary**.
+
+Snapchat docs: [`scripts/web.snapchat.com/docs/SCRIPTS.md`](scripts/web.snapchat.com/docs/SCRIPTS.md)

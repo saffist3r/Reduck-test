@@ -1,6 +1,6 @@
 # QA — Snapchat Web
 
-Issues found while automating `www.snapchat.com/web/` via Reduck.
+Issues found while automating `www.snapchat.com/web/` via Reduck (`scripts/web.snapchat.com/`).
 
 Template: `.cursor/rules/qa-report.mdc`  
 Safety: test account, low rate, read-first.

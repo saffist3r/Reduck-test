@@ -7,11 +7,12 @@ alwaysApply: false
 # Script quality
 
 Mirrors: `scripts/web.snapchat.com/scripts/<slug>/{script.js,meta.json}`  
-Address: `@handle/web.snapchat.com/<slug>`
+Address: `@handle/web.snapchat.com/<slug>`  
+Contracts: `scripts/web.snapchat.com/docs/SCRIPTS.md`
 
 - Validate args; stable return shapes; honest `loggedIn` / `sideEffects`
 - One job per script; finite timeouts; empty/not-found as structured success
-- Cap list scrapes; short delays between open and scrape
-- Cases in `tests/cases.json`; live eval via `run-benchmark.mjs`
-- Static checks: `npm test` (ReDuckHunt)
+- Cap list scrapes; delays between open and scrape
+- Live cases: `tests/cases.json` + `run-benchmark.mjs`
+- Static: `npm test` (ReDuckHunt picks up `tests/**/*.test.js`)
 ---

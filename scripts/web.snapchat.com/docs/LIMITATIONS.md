@@ -1,6 +1,6 @@
 # Limitations — Snapchat Web
 
-Observed hard stops. See also [QA.md](QA.md).
+Hard stops for scripts under `scripts/web.snapchat.com/`. See [QA.md](QA.md) · [SCRIPTS.md](SCRIPTS.md).
 
 ## Catalog
 

@@ -41,3 +41,7 @@ Refresh:
 whoami
 list_runs { host: web.snapchat.com }
 ```
+
+```bash
+wc -c scripts/web.snapchat.com/scripts/*/script.js
+```
