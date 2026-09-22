@@ -45,4 +45,7 @@ Works in catalog: `send_chat_image` (upload via `uploadImages` + Enter). Camera 
 | Loose name match | Exact / includes with min length (QA-008) |
 | Empty messages | Structured `messages: []` + note |
 | Multi-tab flake | Close other Web tabs |
+| Send confirmation | `send_chat_image` is `ok` only when the chat row shows `Delivered · just now`; a second send within ~1 min could match the earlier row |
+| My AI disclaimer | `send_chat_image` stops with `ok: false`; accept it manually (never automated) |
+| Benchmark timing | Step-trace sum per run, excludes browser startup; backfilled via `read_run_trace`, not measured by `run-benchmark.mjs` |
 | Ban risk | Test account, low rate — [BAN_RISKS.md](BAN_RISKS.md) |

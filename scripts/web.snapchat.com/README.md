@@ -31,11 +31,24 @@ Contracts: [docs/SCRIPTS.md](docs/SCRIPTS.md)
 - Test account only · low rate · read scripts never Send
 - `send_chat_image` is deliberate write — prefer a self-chat; avoid blasting My AI / friends
 - Close other Snapchat Web tabs before runs
+
 [SCOPE](docs/SCOPE.md) · [QA](docs/QA.md) · [LIMITATIONS](docs/LIMITATIONS.md) · [BAN_RISKS](docs/BAN_RISKS.md) · [SCRIPTS](docs/SCRIPTS.md)
+
+## Latest live results
+
+| Suite | Result | Script time | Report |
+|-------|--------|-------------|--------|
+| Smoke | 5/5 | 33.6s | [benchmarks/latest.md](benchmarks/latest.md) |
+| Critical | 14/14 | 75.5s | [benchmarks/critical.md](benchmarks/critical.md) |
+| Write (`send_chat_image`) | 2/2 | 15.8s | [benchmarks/write.md](benchmarks/write.md) |
+
+Script time = sum of Reduck step-trace durations (excludes browser startup). Each report lists the Reduck run id per case.
 
 ## Tests
 
 Static (ReDuckHunt): `npm test` from repo root.
+
+Live suites are scored from local run files (`tests/.*-runs.json`, gitignored); the committed reports in `benchmarks/` are the record.
 
 Live smoke (after Reduck runs → `.last-runs.json`):
 

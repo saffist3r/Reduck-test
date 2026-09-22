@@ -21,6 +21,8 @@ Court booking search (tennis, padel, badminton, squash, pickleball, table-tennis
 
 ## Live suite
 
+Latest: **9/9 passed**, 5.7s script time (sum of Reduck step-trace durations) — [benchmarks/latest.md](benchmarks/latest.md). The run file `tests/.last-runs.json` is local (gitignored).
+
 ```bash
 node scripts/anybuddyapp.com/tests/run-benchmark.mjs \
   --from-runs scripts/anybuddyapp.com/tests/.last-runs.json
