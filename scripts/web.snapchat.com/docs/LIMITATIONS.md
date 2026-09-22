@@ -6,10 +6,10 @@ Hard stops for scripts under `scripts/web.snapchat.com/`. See [QA.md](QA.md) · 
 
 | Choice | Why |
 |--------|-----|
-| No auto-Send | Ban risk |
+| No auto-Send in **read** scripts | Ban risk; only `send_chat_image` sends |
 | No friend spam / Story farming | Abuse surface |
 | Web UI only | No unofficial APIs |
-| Text messages only | Media DOM is fragile |
+| Text messages only (read) | Media DOM is fragile; image send is separate |
 
 ## Platform
 
@@ -21,10 +21,12 @@ Hard stops for scripts under `scripts/web.snapchat.com/`. See [QA.md](QA.md) · 
 | Desktop App banner | Noise in scrapes | QA-004 |
 | Lenses = camera only | Chat upload has no Lens UI | QA-011 |
 | No gallery → My Story | Story only via camera Snap → Send To | QA-012 |
+| Chat open → camera / My AI modal | Blocks `uploadImages` until real composer | QA-013 |
+| MyAI “Send” aria-label | Steals send click after image stage | QA-014 |
 | Face Lenses need a face | Else preview looks plain | QA-011 |
 | No fake webcam via Reduck | Needs OS virtual cam / Chrome flags | — |
 
-Works when probed (not in catalog): chat image upload via `setInputFiles` (Buffer); camera → Lens → Send To → chat or My Story.
+Works in catalog: `send_chat_image` (upload via `uploadImages` + Enter). Camera → Lens → Send To → chat or My Story was probed but not catalogued.
 
 ## Reduck
 

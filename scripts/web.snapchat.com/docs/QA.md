@@ -102,3 +102,21 @@ Safety: test account, low rate, read-first.
 - **Actual:** Only camera → Send To → My Story. Upload is chat-only; camera `…` is device picker.
 - **Workaround:** Story via camera path; files via chat send.
 - **Date:** 2026-09-22
+
+### QA-013 — `send_chat_image` waitFor uploadImages after wrong open
+- **Area:** Both
+- **Severity:** P1
+- **Steps:** Click chat `listitem` by index (camera icon side) or open My AI while disclaimer modal is up.
+- **Expected:** Composer + `input[name=uploadImages]`.
+- **Actual:** Camera landing (“Click the Camera…”) or My AI modal → no file input → timeout.
+- **Workaround:** Open like `open_chat` (`filter({ hasText })`); dismiss My AI modal; prefer self-chat for write smoke.
+- **Date:** 2026-09-22
+
+### QA-014 — Sidebar “Send this text to MyAI” steals Send click
+- **Area:** Both
+- **Severity:** P1
+- **Steps:** After staging an image, click first `button[aria-label*=Send]`.
+- **Expected:** Image sends in the open chat.
+- **Actual:** Hits “Send this text to MyAI” → jumps to My AI / disclaimer; preview stays.
+- **Workaround:** Focus composer textbox + `Enter` (blue send arrow has no useful aria-label).
+- **Date:** 2026-09-22

@@ -2,7 +2,7 @@
 
 ```
 scripts/anybuddyapp.com/    # court booking
-scripts/web.snapchat.com/   # Snapchat Web read scripts
+scripts/web.snapchat.com/   # Snapchat Web read + send_chat_image (write)
 tools/ReDuckHunt/           # Vitest (discovers scripts/<host>/)
 ```
 

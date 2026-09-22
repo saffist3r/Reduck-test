@@ -1,0 +1,44 @@
+{
+  "host": "web.snapchat.com",
+  "slug": "send_chat_image",
+  "name": "Send chat image",
+  "description": "Upload an image into a Snapchat Web chat and send it. Pass name to open the chat first, or run with a chat already focused. Writes — use a test account.",
+  "visibility": "public",
+  "loggedIn": true,
+  "sideEffects": "write",
+  "humanRequired": true,
+  "input": {
+    "type": "object",
+    "required": ["image.png"],
+    "properties": {
+      "name": {
+        "type": "string",
+        "minLength": 1,
+        "description": "Optional chat display name to open first (e.g. My AI)."
+      },
+      "caption": {
+        "type": "string",
+        "description": "Optional caption before send."
+      },
+      "image.png": {
+        "type": "string",
+        "format": "file",
+        "description": "Image to send (png/jpeg/gif)."
+      }
+    }
+  },
+  "output": {
+    "type": "object",
+    "required": ["ok"],
+    "properties": {
+      "ok": { "type": "boolean" },
+      "error": { "type": "string" },
+      "clicked": { "type": "boolean" },
+      "snippet": { "type": "string" },
+      "opened": { "type": ["boolean", "null"] },
+      "notFound": { "type": ["boolean", "null"] },
+      "name": { "type": ["string", "null"] },
+      "matchedName": { "type": ["string", "null"] }
+    }
+  }
+}

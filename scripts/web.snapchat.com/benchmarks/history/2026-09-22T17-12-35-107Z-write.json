@@ -1,0 +1,44 @@
+{
+  "ranAt": "2026-09-22T17:12:35.107Z",
+  "suite": "/Users/saffist3r/Projects/Reduck-Test/scripts/web.snapchat.com/tests/write-cases.json",
+  "suiteName": "write",
+  "host": "web.snapchat.com",
+  "summary": {
+    "total": 2,
+    "passed": 2,
+    "failed": 0,
+    "passRate": 1,
+    "totalDurationMs": 0
+  },
+  "byScript": {
+    "send_chat_image": {
+      "passed": 2,
+      "failed": 0,
+      "durationMs": 0
+    }
+  },
+  "results": [
+    {
+      "id": "write-send-image-self",
+      "script": "send_chat_image",
+      "tag": "write",
+      "status": "pass",
+      "notes": "",
+      "reason": "ok",
+      "durationMs": 0,
+      "runId": "live-send-self",
+      "expectFailures": []
+    },
+    {
+      "id": "write-send-image-not-found",
+      "script": "send_chat_image",
+      "tag": "write",
+      "status": "pass",
+      "notes": "",
+      "reason": "ok",
+      "durationMs": 0,
+      "runId": "live-send-notfound",
+      "expectFailures": []
+    }
+  ]
+}

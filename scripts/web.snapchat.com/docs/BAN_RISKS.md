@@ -2,7 +2,8 @@
 
 Not legal advice. Probable risk map from product behavior and common anti-abuse patterns.
 
-**Policy:** test account · read-first · low rate · no auto-Send · no spam.
+**Policy:** test account · read-first · low rate · no spam.  
+Read scripts never Send. `send_chat_image` is the only write — self-chat / test friend, rare runs.
 
 ## Critical
 
@@ -47,6 +48,7 @@ Normal paced list/open/read of a few chats.
 | `list_chats` | `limit` ≤ 20 |
 | `open_chat` | Known names |
 | `list_chat_messages` | Cap `limit`; no Send |
+| `send_chat_image` | Test account; self-chat preferred; never parallel / never blast |
 
 ## If challenged
 

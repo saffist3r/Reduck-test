@@ -4,10 +4,12 @@ Handle: `@saffist3r`
 Local mirrors: `scripts/web.snapchat.com/scripts/<slug>/{script.js,meta.json}`  
 URL: `https://www.snapchat.com/web/` (Reduck host id stays `web.snapchat.com`)
 
-All four: `loggedIn: true`, `sideEffects: none`, `visibility: public`, never Send.
+Read four: `loggedIn: true`, `sideEffects: none`, `visibility: public`, never Send.  
+Write one: `send_chat_image` (`sideEffects: write`, `humanRequired: true`) — test account only.
 
 ```
 check_session → list_chats → open_chat → list_chat_messages
+                                      ↘ send_chat_image (write)
 ```
 
 ---
@@ -65,6 +67,22 @@ Optionally open by name, then scrape **visible text** bubbles. Empty pane → `c
 | **Args** | `name` (optional), `limit` (1–50, default 20) |
 | **Returns** | `count`, `messages[]`, `url`; `opened`, `notFound`, `name`, `composerHint`, `tooManyTabs`, `note` |
 | **Message** | `text`, `from`, `when`, `type` |
+
+---
+
+## `send_chat_image`
+
+`@saffist3r/web.snapchat.com/send_chat_image`
+
+**Write.** Opens optional chat by name, uploads `image.png` via `input[name=uploadImages]`, then sends (Enter on composer — never the “Send this text to MyAI” shortcut). Prefer a self-chat / test friend; My AI may show a disclaimer modal.
+
+| | |
+|--|--|
+| **Args** | `image.png` (file, required); `name` (optional); `caption` (optional) |
+| **Returns** | `ok`, `clicked`, `snippet`; open meta: `opened`, `notFound`, `name`, `matchedName` |
+| **Effects** | `sideEffects: write`, `humanRequired: true` |
+
+Fixture for local smoke: `tests/fixtures/send-test.png`.
 
 ---
 

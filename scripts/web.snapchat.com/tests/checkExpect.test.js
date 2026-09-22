@@ -32,5 +32,10 @@ describe("web.snapchat.com", () => {
         ),
       ).toEqual([]);
     });
+
+    it("clicked for send_chat_image", () => {
+      expect(checkExpect({ clicked: true }, { clicked: true, ok: true })).toEqual([]);
+      expect(checkExpect({ clicked: true }, { clicked: false })[0]).toMatch(/clicked/);
+    });
   });
 });

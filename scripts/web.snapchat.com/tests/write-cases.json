@@ -1,0 +1,32 @@
+{
+  "host": "web.snapchat.com",
+  "suite": "write",
+  "description": "Write smoke for send_chat_image. Run ONCE with deliberate delay. Test account + self-chat preferred. See docs/BAN_RISKS.md.",
+  "cases": [
+    {
+      "id": "write-send-image-self",
+      "script": "send_chat_image",
+      "args": { "name": "saffist3r" },
+      "files": { "image.png": "tests/fixtures/send-test.png" },
+      "tag": "write",
+      "expect": {
+        "ok": true,
+        "clicked": true,
+        "opened": true,
+        "notFound": false
+      }
+    },
+    {
+      "id": "write-send-image-not-found",
+      "script": "send_chat_image",
+      "args": { "name": "zzz-nonexistent-chat-xyz" },
+      "files": { "image.png": "tests/fixtures/send-test.png" },
+      "tag": "write",
+      "expect": {
+        "ok": true,
+        "opened": false,
+        "notFound": true
+      }
+    }
+  ]
+}

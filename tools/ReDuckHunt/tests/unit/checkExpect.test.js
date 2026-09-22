@@ -14,6 +14,8 @@ describe("checkExpect", () => {
 
   it("checks loggedIn", () => {
     expect(checkExpect({ loggedIn: true }, { loggedIn: true })).toEqual([]);
+    expect(checkExpect({ clicked: true }, { clicked: true })).toEqual([]);
+    expect(checkExpect({ clicked: true }, { clicked: false })[0]).toMatch(/clicked/);
     expect(checkExpect({ loggedIn: true }, { loggedIn: false })[0]).toMatch(
       /loggedIn/,
     );

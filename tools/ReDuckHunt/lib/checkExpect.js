@@ -54,6 +54,12 @@ export function checkExpect(expect, result, error = null) {
     }
   }
 
+  if ("clicked" in expect) {
+    if (!!result?.clicked !== !!expect.clicked) {
+      failures.push(`clicked: got ${!!result?.clicked}, want ${!!expect.clicked}`);
+    }
+  }
+
   if (typeof expect.count === "number") {
     const n = Number(result?.count);
     if (n !== expect.count) failures.push(`count: got ${n}, want ${expect.count}`);
